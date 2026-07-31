@@ -1,0 +1,53 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 140 140"
+
+>
+  <defs>
+   <linearGradient id="gossipGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+  <stop offset="0%" stop-color="#FF416C" />
+  <stop offset="100%" stop-color="#8A2387" />
+</linearGradient>
+
+<filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+  <feDropShadow
+    dx="0"
+    dy="4"
+    stdDeviation="6"
+    flood-color="#8A2387"
+    flood-opacity="0.25"
+  />
+</filter>
+  </defs>
+
+  <g transform="translate(10,10)" filter="url(#glow)">
+    <path
+      d="M65 15
+      C37.38 15 15 37.38 15 65
+      C15 92.62 37.38 115 65 115
+      C75.5 115 85.2 111.7 93.2 106.1
+      L115 115
+      L106.1 93.2
+      C111.7 85.2 115 75.5 115 65
+      C115 37.38 92.62 15 65 15Z"
+      fill="url(#gossipGradient)"
+    />
+
+    <path
+      d="M65 38
+      C50.09 38 38 50.09 38 65
+      C38 79.91 50.09 92 65 92
+      C73.5 92 81 88.1 86 82
+      L72 82
+      C69.8 83.3 67.5 84 65 84
+      C54.5 84 46 75.5 46 65
+      C46 54.5 54.5 46 65 46
+      C72 46 78 49.8 81.3 55.5
+      L94 48
+      C88.2 41.8 79.5 38 65 38Z"
+      fill="#FFFFFF"
+    />
+
+    <circle cx="85" cy="65" r="6" fill="#FFFFFF" />
+  </g>
+</svg>

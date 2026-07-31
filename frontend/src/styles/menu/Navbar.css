@@ -1,0 +1,182 @@
+.gp-navbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px 30px;
+    background:#10131d;
+    border-bottom:1px solid #22283b;
+    z-index:999;
+}
+
+.gp-navbar-left{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.gp-logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:white;
+    text-decoration:none;
+    font-size:24px;
+    font-weight:700;
+}
+
+.gp-logo-icon{
+    width:42px;
+    height:42px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#ff2d55,#6c5ce7);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-weight:800;
+    font-size:22px;
+
+}
+
+.gp-navbar-center{
+
+    width:520px;
+
+}
+
+.gp-search{
+    height:48px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:0 18px;
+    border-radius:999px;
+    background:#181c28;
+    border:1px solid transparent;
+    transition:.25s;
+
+}
+
+.gp-search:hover{
+    border-color:#39415f;
+}
+.gp-search:focus-within{
+    border-color:#ff2d55;
+}
+
+.gp-search input{
+    flex:1;
+    background:none;
+    border:none;
+    outline:none;
+    color:white;
+    font-size:15px;
+}
+
+.gp-search svg{
+    color:#9098b1;
+}
+
+.gp-navbar-right{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.gp-nav-btn{
+    width:48px;
+    height:48px;
+    border:none;
+    border-radius:50%;
+    background:#181c28;
+    color:white;
+    cursor:pointer;
+    transition:.25s;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.gp-nav-btn:hover{
+    background:#252c3e;
+}
+
+.gp-badge{
+    position:absolute;
+    right:3px;
+    top:3px;
+    min-width:18px;
+    height:18px;
+    border-radius:20px;
+    background:#ff2d55;
+    color:white;
+    font-size:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+
+}
+
+.gp-profile-btn{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:5px;
+    padding-right:12px;
+    border:none;
+    background:#181c28;
+    border-radius:40px;
+    cursor:pointer;
+    color:white;
+
+}
+
+.gp-profile-btn img{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.gp-mobile-menu{
+    display:none;
+    width:44px;
+    height:44px;
+    border:none;
+    border-radius:50%;
+    background:#181c28;
+    color:white;
+    cursor:pointer;
+
+}
+
+@media(max-width:1100px){
+    .gp-navbar-center{
+        width:380px;
+    }
+
+}
+
+@media(max-width:900px){
+    .gp-navbar{
+        padding:5px 15px;
+
+    }
+    .gp-navbar-center{
+        display:none;
+    }
+    .gp-mobile-menu{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+}
+
+@media(max-width:500px){
+    .gp-logo span{
+        display:none;
+    }
+
+}

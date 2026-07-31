@@ -1,0 +1,26 @@
+
+
+.main-layout{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  position: relative;
+}
+
+.main-layout-wrapper{
+ flex: 1;
+ overflow: hidden;
+ display: flex;   
+ flex-direction: row;
+}
+.main-layout-container{
+  display: flex;
+  flex-direction: column;
+  padding:  20px;
+  overflow-y: auto; 
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+

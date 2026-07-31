@@ -1,0 +1,64 @@
+# ======================================
+# Frontend (React + Vite)
+# ======================================
+
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Environment files
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+# Package manager logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+
+# ======================================
+# Backend (Spring Boot)
+# ======================================
+
+backend/target/
+
+# Environment files
+backend/.env
+backend/.env.*
+!backend/.env.example
+
+# Maven Wrapper (garder le wrapper)
+# Ne PAS ignorer .mvn si tu utilises mvnw
+# backend/.mvn/
+
+# ======================================
+# IDE
+# ======================================
+
+.vscode/
+.idea/
+*.iml
+
+# ======================================
+# OS Files
+# ======================================
+
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ======================================
+# Logs
+# ======================================
+
+*.log
+logs/
+
+# ======================================
+# Root Environment
+# ======================================
+
+.env
+.env.*
+!.env.example
