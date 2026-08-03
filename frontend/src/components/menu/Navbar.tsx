@@ -6,12 +6,15 @@ import  {useSidebar} from "@/context/SidebarContext";
 //hooks
 import useIsMobile from "@/hooks/useIsMobile";
 
+//config
+import appConfig from "@/config/appConfig";
+
 import {
     Search,
     Bell,
     MessageCircle,
     Menu,
-    ChevronDown
+    SlidersHorizontal
 } from "lucide-react";
 
 import "@/styles/menu//Navbar.css";
@@ -43,13 +46,11 @@ const isMobile = useIsMobile(900);
                 </button>
 
                 <Link to="/" className="gp-logo">
-
                     <div className="gp-logo-icon">
-                        G
+                        <img src={appConfig.logo} alt="logo" />
                     </div>
-
                     <span>
-                        Gossip.
+                        {appConfig.title}
                     </span>
 
                 </Link>
@@ -92,17 +93,9 @@ const isMobile = useIsMobile(900);
 
                 </button>
 
-                <button className="gp-profile-btn">
-
-                    <img
-                        src="https://i.pravatar.cc/150?img=8"
-                        alt=""
-                    />
-
-                    <ChevronDown size={16}/>
-
+                <button className="gp-nav-btn">
+                    <SlidersHorizontal size={22}/>
                 </button>
-
             </div>
 
         </header>

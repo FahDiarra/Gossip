@@ -1,0 +1,516 @@
+
+
+.gossip-auth {
+    min-height: 100dvh;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(460px, .85fr);
+    background: #0b0d13;
+    color: #ffffff;
+}
+
+/* =========================================
+   VISUAL
+========================================= */
+
+.gossip-auth-visual {
+    position: relative;
+    min-height: 100dvh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 38px 48px; 
+
+}
+
+
+.gossip-auth-visual-overlay {
+    position: absolute;
+    inset: 0;
+}
+
+.gossip-auth-visual-overlay img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.65);
+    animation: gossip-image-load 1.2s ease-out forwards;
+     
+}
+
+
+@keyframes gossip-image-load {
+    from {
+        opacity: 0;
+        transform: scale(1.08);
+        filter: brightness(0.4) blur(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+        filter: brightness(0.85) blur(0);
+        
+    }
+}
+
+.gossip-auth-visual-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.25),
+        rgba(0, 0, 0, 0.55),
+        rgba(0, 0, 0, 0.8)
+    );
+}
+
+.gossip-auth-brand {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 25px;
+    font-weight: 750;
+}
+
+.gossip-auth-logo {
+    width: 43px;
+    height: 43px;
+}
+
+.gossip-auth-visual-content {
+    position: relative;
+    z-index: 2;
+    max-width: 620px;
+    margin-bottom: 35px;
+}
+
+.gossip-auth-eyebrow {
+    display: inline-flex;
+    margin-bottom: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #ff6683;
+}
+
+.gossip-auth-visual-content h1 {
+    margin: 0;
+    font-size: clamp(42px, 5vw, 76px);
+    line-height: .98;
+    letter-spacing: -3px;
+}
+
+.gossip-auth-visual-content p {
+    max-width: 520px;
+    margin: 28px 0 0;
+    color: rgba(255,255,255,.72);
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.gossip-auth-visual-users {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 35px;
+}
+
+.gossip-auth-avatars {
+    display: flex;
+}
+
+
+.gossip-auth-avatars img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(10,12,18,.8);
+    margin-left: -8px;
+}
+
+
+.gossip-auth-avatars img:first-child {
+    margin-left: 0;
+}
+
+
+.gossip-auth-visual-users span {
+    font-size: 13px;
+    color: rgba(255,255,255,.72);
+}
+
+.gossip-auth-visual-footer {
+    position: relative;
+    z-index: 2;
+    color: rgba(255,255,255,.5);
+    font-size: 12px;
+}
+
+
+/* =========================================
+   FORM SECTION
+========================================= */
+
+.gossip-auth-form-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: #0b0d13;
+}
+
+.gossip-auth-form-wrapper {
+    width: 100%;
+    max-width: 430px;
+}
+
+
+
+.gossip-auth-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+.gp-auth-header-hero{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.gossip-auth-header h2 {
+    margin: 0;
+    font-size: 34px;
+    letter-spacing: -.8px;
+}
+
+
+.gossip-auth-header p {
+    margin: 10px 0 0;
+    color: #858da3;
+    font-size: 14px;
+}
+
+
+/* =========================================
+   GOOGLE
+========================================= */
+
+.gossip-google-btn {
+    width: 100%;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border: 1px solid #2b3040;
+    border-radius: 13px;
+    background: #151822;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.gossip-google-btn:hover {
+    background: #1a1e2a;
+    border-color: #3a4053;
+    transform: translateY(-1px);
+}
+
+.gossip-google-icon {
+    width: 21px;
+    height: 21px;
+    display: flex;
+}
+
+.gossip-google-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* =========================================
+   DIVIDER
+========================================= */
+
+.gossip-auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 27px 0;
+}
+
+.gossip-auth-divider span {
+    height: 1px;
+    flex: 1;
+    background: #262b39;
+}
+
+.gossip-auth-divider p {
+    margin: 0;
+    color: #646c80;
+    font-size: 12px;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.gossip-auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.gossip-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.gossip-field label {
+    color: #d8dce7;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.gossip-input {
+    height: 54px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 0 15px;
+    border: 1px solid #292f3e;
+    border-radius: 13px;
+    background: #12151d;
+    transition: .2s ease;
+}
+
+.gossip-input:focus-within {
+    border-color: #ff4167;
+    box-shadow:
+        0 0 0 3px rgba(255,65,103,.08);
+}
+
+.gossip-input > svg {
+    flex-shrink: 0;
+    color: #697287;
+}
+
+.gossip-input input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.gossip-input input::placeholder {
+    color: #555d70;
+}
+
+.gossip-password-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.gossip-forgot {
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #ff5475;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+
+.gossip-password-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #697287;
+    cursor: pointer;
+}
+
+.gossip-password-toggle:hover {
+    color: #ffffff;
+}
+
+/* =========================================
+   SUBMIT
+========================================= */
+
+.gossip-submit-btn {
+    width: 100%;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 3px;
+    border: none;
+    border-radius: 13px;
+    background:
+        linear-gradient(
+            135deg,
+            #ff2d55,
+            #7c4dff
+        );
+
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow:
+        0 12px 30px rgba(255,45,85,.18);
+    transition: .2s ease;
+}
+
+
+.gossip-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 16px 35px rgba(255,45,85,.25);
+}
+
+.gossip-submit-btn:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================
+   SWITCH
+========================================= */
+
+.gossip-auth-switch {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 27px;
+    color: #777f93;
+    font-size: 13px;
+}
+
+.gossip-auth-switch button {
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #ff5475;
+    font-weight: 650;
+    cursor: pointer;
+}
+
+
+.gossip-auth-terms {
+    max-width: 360px;
+    margin: 25px auto 0;
+    color: #535b6e;
+    text-align: center;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.gossip-auth-terms-link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+.gossip-auth-terms-link:hover {
+    color: #ff6683;
+}
+/* =========================================
+   TABLET
+========================================= */
+
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 800px) {
+    .gossip-auth {
+        display: block;
+        min-height: 100dvh;
+    }
+
+    .gossip-auth-visual {
+        display: none;
+    }
+
+    .gossip-auth-brand {
+        font-size: 21px;
+    }
+
+    .gossip-auth-logo {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+    }
+
+    .gossip-auth-visual-content {
+        display: none;
+    }
+
+    .gossip-auth-visual-footer {
+        display: none;
+    }
+
+    .gossip-auth-form-section {
+        min-height: 70vh;
+        padding: 35px 22px 50px;
+        align-items: flex-start;
+    }
+
+    .gossip-auth-form-wrapper {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+
+    .gossip-auth-visual {
+        min-height: 180px;
+        height: 180px;
+    }
+
+
+    .gossip-auth-form-section {
+        padding: 30px 18px 45px;
+    }
+
+    .gossip-auth-header h2 {
+        font-size: 28px;
+    }
+
+    .gossip-google-btn,
+    .gossip-input,
+    .gossip-submit-btn {
+        height: 52px;
+    }
+
+}

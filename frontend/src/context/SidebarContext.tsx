@@ -7,15 +7,10 @@ import {
 
 
 type SidebarContextType = {
-
     open: boolean;
-
     mobileOpen: boolean;
-
     toggleSidebar: () => void;
-
     openMobile: () => void;
-
     closeMobile: () => void;
 
 };
@@ -23,33 +18,25 @@ type SidebarContextType = {
 
 const SidebarContext = createContext<SidebarContextType | null>(null);
 
-
-
 export function SidebarProvider({
     children
 }: {
     children: React.ReactNode
 }) {
 
-
     const [open, setOpen] = useState<boolean>(() => {
 
         if(typeof window === "undefined"){
-
             return true;
-
         }
-
 
         const saved = localStorage.getItem(
             "gossip_sidebar"
         );
 
-
         return saved !== null
             ? JSON.parse(saved)
             : true;
-
     });
 
 
@@ -57,39 +44,28 @@ export function SidebarProvider({
     const [mobileOpen, setMobileOpen] = useState(false);
 
 
-
     useEffect(() => {
-
-
         localStorage.setItem(
             "gossip_sidebar",
             JSON.stringify(open)
         );
 
-
     }, [open]);
 
 
 
-
     const toggleSidebar = () => {
-
         setOpen(prev => !prev);
-
     };
 
 
     const openMobile = () => {
-
         setMobileOpen(true);
-
     };
 
 
     const closeMobile = () => {
-
         setMobileOpen(false);
-
     };
 
 
@@ -104,11 +80,8 @@ export function SidebarProvider({
                 toggleSidebar,
                 openMobile,
                 closeMobile
-            }}
-
-        >
+            }} >
             {children}
-
         </SidebarContext.Provider>
 
     );
@@ -117,7 +90,6 @@ export function SidebarProvider({
 
 
 export function useSidebar(){
-
     const context = useContext(
         SidebarContext
     );
@@ -128,10 +100,8 @@ export function useSidebar(){
         throw new Error(
             "useSidebar must be used inside SidebarProvider"
         );
-
     }
-
-
+    
     return context;
 
 }

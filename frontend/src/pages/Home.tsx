@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <div>
       <h1 >
-       Je t'aime 
+       Home
       </h1>
     </div>
   )

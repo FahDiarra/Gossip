@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 
 //context
 import { useSidebar } from "@/context/SidebarContext";
+import appConfig from "@/config/appConfig";
 import {
     Home,
     Flame,
@@ -18,6 +19,7 @@ import {
     User,
     Settings,
     ChevronLeft,
+    ChevronRight
 } from "lucide-react";
 import "@/styles/menu/Sidebar.css";
 
@@ -40,13 +42,11 @@ const {
         {icon:<Compass size={22}/>,label:"Explore",path:"/explore"},
         {icon:<Clapperboard size={22}/>,label:"Reels",path:"/reels"},
         {icon:<PlaySquare size={22}/>,label:"Videos",path:"/videos"},
-        {icon:<MessageCircle size={22}/>,label:"Messages",path:"/messages"},
-        {icon:<Bell size={22}/>,label:"Notifications",path:"/notifications"},
         {icon:<Users size={22}/>,label:"Friends",path:"/friends"},
         {icon:<Star size={22}/>,label:"Following",path:"/following"},
         {icon:<Bookmark size={22}/>,label:"Saved",path:"/saved"},
-        {icon:<User size={22}/>,label:"Profile",path:"/profile"},
-        {icon:<Settings size={22}/>,label:"Settings",path:"/settings"}
+     
+        {icon:<Settings size={22}/>,label:"Settings",path:"/signin"}
 
     ];
 
@@ -96,6 +96,57 @@ const {
                 }
          </div>
         </nav>
+
+        <div className="gp-sidebar-footer-profile">
+        <Link to="/profile" className="gp-sidebar-footer-profile-link">
+
+            <div className="gp-sidebar-footer-profile-info">
+                <div className="gp-sidebar-footer-profile-icon">
+                    <User size={20} />
+                </div>
+                {open && (
+                <>
+                <div className="gp-sidebar-footer-profile-text">
+                    <span className="gp-sidebar-footer-profile-title">
+                        Profile
+                    </span>
+                    <small>
+                         Your posts & activity
+                    </small>
+                </div>
+                 </> ) }
+             </div>
+
+            {open && (
+                <ChevronRight className="gp-sidebar-footer-profile-arrow" size={20} />
+            )}
+        </Link>
+    </div>
+
+     <div className="gp-sidebar-footer-profile">
+        <Link to="/signin" className="gp-sidebar-footer-profile-link">
+            <div className="gp-sidebar-footer-profile-info">
+                <div className="gp-sidebar-footer-profile-icon">
+                    <User size={20} />
+                </div>
+                {open && (
+                <>
+                <div className="gp-sidebar-footer-profile-text">
+                    <span className="gp-sidebar-footer-profile-title">
+                       Join {appConfig.title}
+                    </span>
+                    <small>
+                           Sign in or sign up
+                    </small>
+                </div>
+                 </> ) }
+             </div>
+
+            {open && (
+                <ChevronRight className="gp-sidebar-footer-profile-arrow" size={20} />
+            )}
+        </Link>
+    </div>
 
     </aside>
 
