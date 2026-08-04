@@ -4,16 +4,16 @@ import './index.css'
 import App from './App.tsx'
 
 import { SidebarProvider } from '@/context/SidebarContext'
-
+import { ModalOpenedContextProvider } from "@/context/ModalOpenedContext";
 
 createRoot(document.getElementById('root')!).render(
 
     <StrictMode>
 
         <SidebarProvider>
-
-            <App />
-
+           <ModalOpenedContextProvider>
+               <App />
+         </ModalOpenedContextProvider>
         </SidebarProvider>
 
     </StrictMode>,
