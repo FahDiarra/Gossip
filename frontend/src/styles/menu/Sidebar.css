@@ -4,8 +4,8 @@
     flex-direction: column;
     justify-content: space-between;
     gap: 2px;
-    background:#11141d;
-    border-right:1px solid #23293d;
+    background: var(--sidebar-bg);
+    border-right:1px solid var(--border);
     transition:.25s;
     z-index:900;
 }
@@ -15,7 +15,7 @@
     width:90px;
 }
 .gp-sidebar-header-content{
-   border-bottom:1px solid #22283b;
+   border-bottom:1px solid var(--border);
 }
 .gp-sidebar-header{
     display:flex;
@@ -25,7 +25,7 @@
 }
 
 .gp-sidebar-header h2{
-    color:white;
+    color:var(--text);
     font-size:20px;
 }
 
@@ -79,6 +79,7 @@
 .gp-sidebar-items{
     display: flex;
     flex-direction: column;
+    gap: 1px;
 }
 .gp-sidebar-item{
     display:flex;
@@ -87,7 +88,7 @@
     height:54px;
     border-radius:14px;
     padding:0 18px;
-    color:#c5cad8;
+    color:var(--text);
     text-decoration:none;
     transition:.2s;
 }

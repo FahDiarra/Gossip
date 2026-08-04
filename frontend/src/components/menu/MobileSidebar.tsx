@@ -13,11 +13,9 @@ import {
 } from "react-router-dom";
 
 import "@/styles/menu//MobileSidebar.css";
+
 export default function MobileSidebar(){
-
-
     const menu = [
-
         {
             icon:<Home size={24}/>,
             label:"Home",
@@ -32,95 +30,48 @@ export default function MobileSidebar(){
 
     ];
 
-
-
     return (
 
         <nav className="gp-mobile-bottom">
-     
-    
             <div className="gp-mobile-links">
-
-
                 {
                     menu.map(item=>(
 
                         <NavLink
-
                             key={item.path}
-
                             to={item.path}
-
-                            className={({isActive})=>
-
-                                isActive
+                             className={({isActive})=> isActive
                                 ? "active"
-                                : ""
-
-                            }
-
-                        >
-
+                                : ""  }  >
                             {item.icon}
-
                             <span>
                                 {item.label}
                             </span>
-
-
                         </NavLink>
-
                     ))
-                }
-
-
-
+                  }
             </div>
 
-
-
-            <button
-                className="gp-mobile-create"
-            >
-
+            <button className="gp-mobile-create"      >
                 <Plus size={32}/>
-
             </button>
-
-
 
             <div className="gp-mobile-links right">
 
-
-                <NavLink
-                    to="/notifications"
-                >
-
+                <NavLink  to="/notifications"   >
                     <Heart size={24}/>
-
                     <span>
                         Likes
                     </span>
-
                 </NavLink>
 
-
-                <NavLink
-                    to="/profile"
-                >
-
+                <NavLink to="/profile"  >
                     <User size={24}/>
-
                     <span>
                         Profile
                     </span>
-
                 </NavLink>
-
-
             </div>
-
-   
         </nav>
 
     );

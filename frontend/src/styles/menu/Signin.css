@@ -4,8 +4,8 @@
     min-height: 100dvh;
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(460px, .85fr);
-    background: #0b0d13;
-    color: #ffffff;
+    background: var(--bg);
+    color: var(--text);
 }
 
 /* =========================================
@@ -162,7 +162,7 @@
     align-items: center;
     justify-content: center;
     padding: 40px;
-    background: #0b0d13;
+    background: var(--bg);
 }
 
 .gossip-auth-form-wrapper {
