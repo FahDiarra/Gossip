@@ -1,0 +1,420 @@
+/* ==========================================
+   CreatePost.css
+========================================== */
+
+
+
+.createPostPage {
+   
+    padding: 40px 20px;
+    background: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.createPostCard {
+    width: 100%;
+    max-width: 1200px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, .08);
+    overflow: hidden;
+}
+
+/* ======================
+        HEADER
+====================== */
+
+.createPostHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 28px;
+    border-bottom: 1px solid #ececec;
+}
+
+.createPostHeader h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #222;
+}
+
+
+
+/* ======================
+        USER
+====================== */
+
+.postUser {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 28px;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5d5fef, #7d53ff);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userInfo h3 {
+    font-size: 17px;
+    margin-bottom: 4px;
+}
+
+.userInfo p {
+    color: #777;
+    font-size: 14px;
+}
+
+.visibility select {
+    border: 1px solid #ddd;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    outline: none;
+}
+
+/* ======================
+        TEXTAREA
+====================== */
+
+.postInput {
+    width: calc(100% - 56px);
+    margin: 0 28px;
+    resize: none;
+    min-height: 170px;
+    border: 1px solid #e4e4e4;
+    border-radius: 14px;
+    padding: 18px;
+    font-size: 17px;
+    outline: none;
+    transition: .25s;
+    overflow: hidden;
+    line-height: 1.6;
+    font-family: inherit;
+}
+
+.postInput:focus {
+    border-color: #5d5fef;
+    box-shadow: 0 0 0 4px rgba(93, 95, 239, .15);
+}
+
+.postInput::placeholder {
+    color: #999;
+}
+
+/* ======================
+        ACTIONS
+====================== */
+
+.postActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 25px 28px;
+}
+
+.postActions button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+    background: #f5f5f5;
+    padding: 12px 18px;
+    border-radius: 12px;
+    transition: .25s;
+    font-size: 14px;
+    color: #333;
+}
+
+.postActions button:hover {
+    background: #ececff;
+    color: #5d5fef;
+    transform: translateY(-2px);
+}
+
+/* ======================
+        PREVIEW
+====================== */
+
+.previewContainer {
+    margin: 0 28px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+    gap: 16px;
+    padding-bottom: 25px;
+}
+
+.previewItem {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #eee;
+    animation: fade .35s ease;
+}
+
+.previewItem img,
+.previewItem video {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.removeMedia {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,.65);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.removeMedia:hover {
+    background: #ff3b30;
+}
+
+/* ======================
+      COMMENTS
+====================== */
+
+.commentOption {
+    padding: 0 28px 30px;
+    font-size: 15px;
+    color: #333;
+}
+
+.commentOption label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.commentOption input {
+    width: 18px;
+    height: 18px;
+}
+
+/* ======================
+        FOOTER
+====================== */
+
+.footerButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    padding: 24px 28px;
+    border-top: 1px solid #ececec;
+}
+
+.cancelButton {
+    border: none;
+    background: #f3f3f3;
+    padding: 12px 26px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: .25s;
+}
+
+.cancelButton:hover {
+    background: #ddd;
+}
+
+.publishButton {
+    border: none;
+    background: linear-gradient(135deg,#5d5fef,#7d53ff);
+    color: white;
+    padding: 12px 32px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: .25s;
+}
+
+.publishButton:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(93,95,239,.35);
+}
+
+.publishButton:disabled {
+    opacity: .7;
+    cursor: not-allowed;
+}
+
+/* ======================
+        LOADER
+====================== */
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+/* ======================
+      SCROLLBAR
+====================== */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c9c9c9;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+/* ======================
+      ANIMATIONS
+====================== */
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+        transform: scale(.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ======================
+      RESPONSIVE
+====================== */
+
+@media (max-width: 768px) {
+
+    .createPostPage {
+        padding: 0;
+        background: white;
+    }
+
+    .createPostCard {
+        border-radius: 0;
+        box-shadow: none;
+        min-height: 100vh;
+    }
+
+    .createPostHeader,
+    .postUser,
+    .postActions,
+    .footerButtons {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .postInput {
+        width: calc(100% - 36px);
+        margin: 0 18px;
+        font-size: 16px;
+    }
+
+    .previewContainer {
+        margin: 0 18px;
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .footerButtons {
+        flex-direction: column-reverse;
+    }
+
+    .publishButton,
+    .cancelButton {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .postUser {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+    }
+
+    .visibility {
+        width: 100%;
+    }
+
+    .visibility select {
+        width: 100%;
+    }
+
+    .postActions {
+        gap: 10px;
+    }
+
+    .postActions button {
+        flex: 1 1 calc(50% - 10px);
+        justify-content: center;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .previewContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .avatar {
+        width: 50px;
+        height: 50px;
+        font-size: 17px;
+    }
+
+    .createPostHeader h2 {
+        font-size: 19px;
+    }
+
+    .postInput {
+        min-height: 150px;
+    }
+
+    .postActions button {
+        width: 100%;
+        flex: 100%;
+    }
+}

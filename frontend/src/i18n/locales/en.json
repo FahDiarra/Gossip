@@ -1,0 +1,43 @@
+{
+
+  "navbar": {
+   "placeholder":"Search users, videos...",
+   "theme":"Theme",
+   "english":"English",
+   "french":"French",
+   "spanish":"Spanish",
+   "location":"Location",
+   "customize":"Customize"
+
+  },
+
+  "sidebar":{
+    "menu":"Menu",
+    "post_label":"Create Post",
+    "home":"Home",
+    "explore":"Explore",
+    "vibes":"Vibes",
+    "live":"Live",
+    "friends": "Friends",
+    "following":"Following",
+    "liked":"Liked",
+    "saved": "Saved",
+
+    
+    "profile": "Profile",
+    "profile_label":"Posts & activity",
+    "join":"Join",
+    "join_label":"Sign in or Sign up"
+  },
+
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password"
+  },
+
+  "messages": {
+    "welcome": "Welcome to Gossip"
+  }
+}

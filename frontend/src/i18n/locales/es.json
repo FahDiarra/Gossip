@@ -1,0 +1,29 @@
+{
+  "navbar": {
+    "placeholder": "Buscar usuarios, videos...",
+    "theme": "Tema",
+    "english": "Inglés",
+    "french": "Francés",
+    "spanish": "Español",
+    "location": "Ubicación",
+    "customize": "Personalizar"
+  },
+
+  "sidebar": {
+    "menu": "Menú",
+    "post_label": "Crear publicación",
+    "home": "Inicio",
+    "explore": "Explorar",
+    "vibes": "Vibras",
+    "live": "En vivo",
+    "friends": "Amigos",
+    "following": "Siguiendo",
+    "liked": "Me gusta",
+    "saved": "Guardados",
+
+    "profile": "Perfil",
+    "profile_label": "Publicaciones y actividad",
+    "join": "Iniciar sesión",
+    "join_label": "Inicia sesión o regístrate"
+  }
+}

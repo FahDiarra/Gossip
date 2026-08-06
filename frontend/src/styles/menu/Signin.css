@@ -66,15 +66,6 @@
     );
 }
 
-.gossip-auth-brand {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    font-size: 25px;
-    font-weight: 750;
-}
 
 .gossip-auth-logo {
     width: 43px;
@@ -281,7 +272,7 @@
 }
 
 .gossip-field label {
-    color: #d8dce7;
+    color: var(--secondary-text);
     font-size: 13px;
     font-weight: 600;
 }
@@ -292,9 +283,9 @@
     align-items: center;
     gap: 11px;
     padding: 0 15px;
-    border: 1px solid #292f3e;
+    border: 1px solid var(--border);
     border-radius: 13px;
-    background: #12151d;
+    background: var(--input-bg);
     transition: .2s ease;
 }
 
@@ -315,12 +306,12 @@
     border: none;
     outline: none;
     background: transparent;
-    color: #ffffff;
+    color: var(--text);
     font-size: 14px;
 }
 
 .gossip-input input::placeholder {
-    color: #555d70;
+    color: var(--placeholder);
 }
 
 .gossip-password-label {

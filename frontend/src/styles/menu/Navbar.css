@@ -41,7 +41,7 @@
     gap:12px;
     padding:0 18px;
     border-radius:999px;
-    background:#181c28;
+    background:var(--input-bg);
     border:1px solid transparent;
     transition:.25s;
 }
@@ -50,15 +50,17 @@
     border-color:var(--border);
 }
 .gp-search:focus-within{
-    border-color:#ff2d55;
+    border-color:#ff2d99dd;
 }
-
+.gp-search-input::placeholder{
+    color: var(--placeholder);
+}
 .gp-search input{
     flex:1;
     background:none;
     border:none;
     outline:none;
-    color:white;
+    color:var(--text);
     font-size:15px;
 }
 
@@ -77,8 +79,9 @@
     height:44px;
     border:none;
     border-radius:8px;
-    background:#181c28;
-    color:white;
+      background:var(--nav-btn-bg);
+    color:var(--nav-btn-color);
+
     cursor:pointer;
     transition:.25s;
     position:relative;
@@ -88,7 +91,7 @@
 }
 
 .gp-nav-btn:hover,.gp-nav-btn.active{
-    background:#252c3e;
+    background:var(--nav-btn-bg-hover);
 }
 
 

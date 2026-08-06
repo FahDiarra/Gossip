@@ -14,6 +14,7 @@ import MainLayout from "@/layout/MainLayout";
 import Home from "@/pages/Home.tsx";
 import Signin from "@/pages/Signin.tsx";
 import Profile from "@/pages/Profile.tsx";
+import CreatePost from "@/pages/CreatePost";
 
 import './App.css'
 
@@ -30,6 +31,7 @@ export default function App(){
                 <Route element={<MainLayout />}>
                    <Route path="/"  element={<Home />}  />
                    <Route path="/profile" element={<Profile />} />
+                   <Route path="/create" element={<CreatePost />} />
                 </Route>
                 <Route path="/signin" element={<Signin />} />
             </Routes>

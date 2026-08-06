@@ -38,11 +38,13 @@
     height:40px;
     border:none;
     border-radius:12px;
-    background:#1b2030;
-    color:white;
+    background:var(--sidebar-btn-bg);
+    color:var(--sidebar-btn-color);
     cursor:pointer;
 }
-
+.gp-sidebar-header button:hover{
+    background: var(--sidebar-btn-bg-hover);
+}
 .rotate{
     transform:rotate(180deg);
 }
@@ -94,19 +96,20 @@
 }
 
 .gp-sidebar-item:hover{
-    background:#1a2030;
-    color:white;
+    background:var(--sidebar-item-bg-hover);
+    transform: translateX(3px);
 }
 
 .gp-sidebar-item.active{
-    background:#232b43;
-    color:white;
+    background:var(--sidebar-item-active-bg);
+}
+.gp-sidebar-item span{
+
 }
 
 .gp-sidebar.close .gp-sidebar-item{
     justify-content:center;
     padding:0;
-
 }
 
 .gp-sidebar.close .gp-sidebar-item span{
@@ -131,7 +134,7 @@
     justify-content: space-between;
     padding: 8px;
     border-radius: 14px;
-    color: #c5cad8;
+    color: var(--text);
     text-decoration: none;
     background: transparent;
     transition:
@@ -142,8 +145,7 @@
 
 
 .gp-sidebar-footer-profile-link:hover {
-    background: rgba(255,255,255,0.06);
-    color: white;
+    background:var(--sidebar-item-bg-hover);
     transform: translateX(3px);
 }
 
@@ -155,6 +157,24 @@
     gap: 12px;
 }
 
+
+/* Cercle profile photo */
+.gp-sidebar-footer-profile-photo {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(135deg, #ff6683, #9b5cff);
+    box-shadow: 0 4px 15px rgba(255, 102, 131, .25);
+}
+
+.gp-sidebar-footer-profile-photo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
 
 /* Cercle icône */
 .gp-sidebar-footer-profile-icon {
@@ -190,7 +210,7 @@
 
 .gp-sidebar-footer-profile-text small {
     font-size:12px;
-    color:#8991a7;
+    color:var(--secondary-text);
     line-height: 14px;
     
 }

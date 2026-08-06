@@ -3,6 +3,9 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 
+
+//Lang
+import "@/i18n/langConfig";
 //context
 import { SidebarProvider } from '@/context/SidebarContext'
 import { ModalOpenedContextProvider } from "@/context/ModalOpenedContext";

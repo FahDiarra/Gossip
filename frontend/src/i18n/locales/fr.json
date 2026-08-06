@@ -1,0 +1,29 @@
+{
+  "navbar": {
+    "placeholder": "Rechercher des utilisateurs, des vidéos...",
+    "theme": "Thème",
+    "english": "Anglais",
+    "french": "Français",
+    "spanish": "Espagnol",
+    "location": "Emplacement",
+    "customize": "Personnaliser"
+  },
+
+  "sidebar": {
+    "menu": "Menu",
+    "post_label": "Créer une publication",
+    "home": "Accueil",
+    "explore": "Explorer",
+    "vibes": "Ambiance",
+    "live": "En direct",
+    "friends": "Amis",
+    "following": "Abonnements",
+    "liked": "J'aime",
+    "saved": "Enregistrés",
+
+    "profile": "Profil",
+    "profile_label": "Publications et activité",
+    "join": "Se connecter",
+    "join_label": "Se connecter ou s'inscrire"
+  }
+}

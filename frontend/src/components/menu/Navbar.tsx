@@ -1,5 +1,6 @@
 
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 //context
 import {useTheme} from "@/context/ThemeContext";
@@ -9,6 +10,10 @@ import useToggleDropdown from "@/hooks/useToggleDown";
 import BtnWithTooltip from "@/components/BtnWithTooltip.tsx";
 //config
 import appConfig from "@/config/appConfig";
+//lang
+import i18n from "@/i18n/langConfig";
+//lang
+import { useTranslation } from "react-i18next";
 
 import {
     Search,
@@ -25,7 +30,7 @@ import {
 } from "lucide-react";
 
 import "@/styles/menu/Navbar.css";
-import { useState } from "react";
+
 
 export default function Navbar() {
 
@@ -36,16 +41,39 @@ export default function Navbar() {
         btnRef:configBtnRef
     } = useToggleDropdown();
 
-const { theme, setTheme } = useTheme();
+     const {
+        open:langOpen,
+        toggle:langToggle,
+        menuRef:langMenuRef,
+        btnRef:langBtnRef
+    } = useToggleDropdown();
 
-const [openLanguage, setOpenLanguage] = useState(false);
+const { theme, setTheme } = useTheme();
+ const {t}=useTranslation();
+
 const isMobile = useIsMobile(900);
+
+const changeLanguage = (lang:string)=>{
+  i18n.changeLanguage(lang);
+  localStorage.setItem(
+    "language",
+    lang
+  );
+
+ langToggle();
+
+};
+
+const languages = {
+  en: t("navbar.english"),
+  fr: t("navbar.french"),
+  es: t("navbar.spanish"),
+};
+const langType = () => i18n.resolvedLanguage;
 
     return (
         <header className="gp-navbar">
-            <div className="gp-navbar-left">
-               
-
+            <div className="gp-navbar-left">           
                 <Link to="/" className="gp-logo">
                     <div className="gp-logo-icon">
                         <img src={appConfig.logo} alt="logo" />
@@ -53,45 +81,28 @@ const isMobile = useIsMobile(900);
                     <span>
                         {appConfig.title}
                     </span>
-
                 </Link>
-
             </div>
 
             <div className="gp-navbar-center">
-
                 <div className="gp-search">
-
                     <Search size={18}/>
-
-                    <input
-                        placeholder="Search users, videos..."
-                    />
-
+                    <input   placeholder={t("navbar.placeholder")} />
                 </div>
-
             </div>
 
             <div className="gp-navbar-right">
-
                 <button className="gp-nav-btn">
-
                     <MessageCircle size={22}/>
-
                     <span className="gp-badge">
                         3
                     </span>
-
                 </button>
-
                 <button className="gp-nav-btn">
-
                     <Bell size={22}/>
-
                     <span className="gp-badge">
                         9
                     </span>
-
                 </button>
                 
 <div className="gp-dropdown-wrapper" ref={configMenuRef}>
@@ -100,7 +111,7 @@ const isMobile = useIsMobile(900);
     ref={configBtnRef}
     onClick={configToggle}
     className={`gp-nav-btn ${configOpen ? "active" : ""}`}
-    tooltip="Customize" >
+    tooltip={t("navbar.customize")} >
      <SlidersHorizontal size={22} />
  </BtnWithTooltip>
 
@@ -113,7 +124,7 @@ const isMobile = useIsMobile(900);
         <div className="gp-dropdown-header">
           <div className="gp-dropdown-title">
             <Sun size={17} />
-            <span>Theme</span>
+            <span>{t("navbar.theme")}</span>
           </div>
         </div>
 
@@ -132,10 +143,9 @@ const isMobile = useIsMobile(900);
             <Moon size={16} />
           </button>
 
-          <button
+           <button
             className={`gp-theme-btn ${theme === "default" ? "active" : ""}`}
-            onClick={() => setTheme("default")}
-          >
+            onClick={() => setTheme("default")}  >
             <Monitor size={16} />
           </button>
         </div>
@@ -143,52 +153,50 @@ const isMobile = useIsMobile(900);
 
       {/* Language */}
 
-      <div className="gp-dropdown-item">
-  <div className="gp-lang-wrapper">
+        <div className="gp-dropdown-item">
+          <div className="gp-lang-wrapper">
 
-    <button
-      className="gp-dropdown-row"
-      onClick={() => setOpenLanguage(!openLanguage)}
-    >
-      <div className="gp-dropdown-title">
-        <Globe size={17} />
-        <span>Language</span>
-      </div>
+            <button
+              className="gp-dropdown-row"
+              onClick={langToggle}  ref={langBtnRef}   >
+              <div className="gp-dropdown-title">
+                <Globe size={17} />
+                <span>
+                  {languages[i18n.resolvedLanguage as keyof typeof languages]} 
+                </span>
+              </div>
 
-      <div className="gp-dropdown-value">
-        <span>Default</span>
-        <ChevronDown
-          size={16}
-          className={openLanguage ? "rotate" : ""}
-        />
-      </div>
-    </button>
+              <div className="gp-dropdown-value">
+                <span>Select</span>
+                <ChevronDown
+                  size={16}  className={langOpen ? "rotate" : ""}  />
+              </div>
+            </button>
 
-    {openLanguage && (
-      <div className="gp-lang-dropdown">
-        <button className="active">
-          <Monitor size={15} />
-          <span>Default (Browser)</span>
-        </button>
+            {langOpen && (
+              <div className="gp-lang-dropdown" ref={langMenuRef}>
+                
+                <button onClick={()=>changeLanguage("en")} 
+                className={`btnChangeLang ${langType() === "en" ? "active" : "" }`} >
+                  🇺🇸
+                  <span>{t("navbar.english")}</span>
+                </button>
 
-        <button>
-          🇺🇸
-          <span>English</span>
-        </button>
+                <button onClick={()=>changeLanguage("fr")}
+                  className={`btnChangeLang ${langType() === "fr" ? "active" : "" }`}>
+                  🇫🇷
+                  <span>{t("navbar.french")}</span>
+                </button>
 
-        <button>
-          🇫🇷
-          <span>Français</span>
-        </button>
-
-        <button>
-          🇪🇸
-          <span>Español</span>
-        </button>
-      </div>
-    )}
-  </div>
-</div>
+                <button onClick={()=>changeLanguage("es")}
+                  className={`btnChangeLang ${langType() === "es" ? "active" : "" }`}>
+                  🇪🇸
+                  <span>{t("navbar.spanish")}</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
 
       {/* Location */}
 
@@ -196,7 +204,7 @@ const isMobile = useIsMobile(900);
         <button className="gp-dropdown-row">
           <div className="gp-dropdown-title">
             <MapPin size={17} />
-            <span>Location</span>
+            <span>{t("navbar.location")}</span>
           </div>
 
           <div className="gp-dropdown-value">

@@ -59,15 +59,6 @@ export default function Signin() {
 
     };
    
-    const brand = (
-    <div className="gossip-auth-brand">
-        <div className="gossip-auth-logo">
-            <img src={appConfig.logo} alt="Gossip" />
-        </div>
-
-        <span>{appConfig.title}</span>
-    </div>
-);
 
 
     return (
@@ -79,9 +70,7 @@ export default function Signin() {
                     <img src={appConfig.authBg} alt="Gossip" />
                 </div>
 
-                {brand}
-
-
+            
                 <div className="gossip-auth-visual-content">
                     <span className="gossip-auth-eyebrow">
                         CONNECT • SHARE • HAVE FUN

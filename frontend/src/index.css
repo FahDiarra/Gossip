@@ -1,8 +1,8 @@
 :root {
   --text: #111827;
-  --text-h: #08060d;
-   --bg: #f8fafc;
-    --border: #e5e7eb;
+  --secondary-text: #8b95a7;
+  --bg: #f8fafc;
+  --border: #e5e7eb;
   --code-bg: #f4f3ec;
   --accent: #aa3bff;
   --accent-bg: rgba(170, 59, 255, 0.1);
@@ -25,9 +25,36 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
     
-
+   /*Navbar*/
   --navbar-bg: #ffffff;
+  --nav-btn-bg: #f3f4f6;
+  --nav-btn-bg-hover: #e5e7eb;
+  --nav-btn-color: #374151;
+  --placeholder: #8b95a7;
+    
+  /*Sidebar*/
   --sidebar-bg: #ffffff;
+  --sidebar-btn-bg: #f3f4f6;  
+  --sidebar-btn-bg-hover: #e5e7eb;
+  --sidebar-btn-color: #374151;
+
+  --sidebar-item-bg-hover: #f3f4f6;
+  --sidebar-item-active-bg:#e5e7eb;
+
+
+
+       /*Input*/
+      --input-bg: #f3f4f6;
+      --input-hover: #e5e7eb;
+      --input-focus: #ffffff;
+      
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --secondary: #64748b;
+    --secondary-hover: #475569;
+
+
+ 
 
 
 }
@@ -35,9 +62,9 @@
 
   :root[data-theme="dark"]{
     --text: #f3f4f6;
-    --text-h: #f3f4f6;
+    --secondary-text: #8b95a7;
     --bg: #0b0e14;
-      --border: #252c3a;
+    --border: #252c3a;
     --code-bg: #1f2028;
     --accent: #c084fc;
     --accent-bg: rgba(192, 132, 252, 0.15);
@@ -46,10 +73,31 @@
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
      
-
+    
+      /*Navbar*/
       --navbar-bg: #10131d;
+      --nav-btn-bg: #181c28;
+      --nav-btn-bg-hover: #252c3e;
+      --nav-btn-color: #f3f4f6;
+       
+      /*Input*/
+      --input-bg: #181c28;
+      --input-hover: #202636;
+      --input-focus: #252c3e;
+      
+        /*Sidebar*/
       --sidebar-bg: #10131d;
+      --sidebar-btn-bg: #181c28;
+      --sidebar-btn-bg-hover: #252c3e;
+      --sidebar-btn-color: #f3f4f6;
 
+      --sidebar-item-bg-hover:#181c28 ;
+      --sidebar-item-active-bg:#252c3e ; 
+
+    --primary: #3b82f6;
+    --primary-hover: #60a5fa;
+    --secondary: #94a3b8;
+    --secondary-hover: #cbd5e1;
 
       color-scheme: dark;
   
@@ -61,6 +109,9 @@
 *,
 *::before,
 *::after {
+    box-sizing: border-box;
+}
+* {
     box-sizing: border-box;
 }
 

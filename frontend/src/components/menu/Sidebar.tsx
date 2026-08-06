@@ -1,34 +1,36 @@
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,useNavigate } from "react-router-dom";
 
 //context
 import { useSidebar } from "@/context/SidebarContext";
+//config
 import appConfig from "@/config/appConfig";
+//lang
+import { useTranslation } from "react-i18next";
 import {
     Home,
-    Flame,
+    Heart,
     Compass,
     Clapperboard,
-    PlaySquare,
-    MessageCircle,
-    Bell,
     Users,
     Star,
     Bookmark,
     PlusCircle,
     User,
-    Settings,
     ChevronLeft,
-    ChevronRight
+    ChevronRight,
+    Radio
 } from "lucide-react";
 import "@/styles/menu/Sidebar.css";
 
+import exProfile from "@/images/profile.jpg"
 
 export default function Sidebar() {
 
     const location = useLocation();
-
-
+    const {t}=useTranslation();
+     const navigate = useNavigate();
+    
 
 const {
     open,
@@ -37,16 +39,14 @@ const {
 
     const menus = [
 
-        {icon:<Home size={22}/>,label:"Home",path:"/"},
-        {icon:<Flame size={22}/>,label:"Trending",path:"/trending"},
-        {icon:<Compass size={22}/>,label:"Explore",path:"/explore"},
-        {icon:<Clapperboard size={22}/>,label:"Reels",path:"/reels"},
-        {icon:<PlaySquare size={22}/>,label:"Videos",path:"/videos"},
-        {icon:<Users size={22}/>,label:"Friends",path:"/friends"},
-        {icon:<Star size={22}/>,label:"Following",path:"/following"},
-        {icon:<Bookmark size={22}/>,label:"Saved",path:"/saved"},
-     
-        {icon:<Settings size={22}/>,label:"Settings",path:"/signin"}
+        {icon:<Home size={22}/>,label: t("sidebar.home"),path:"/"},
+        {icon:<Compass size={22}/>,label:t("sidebar.explore"),path:"/explore"},
+        {icon:<Clapperboard size={22}/>,label:t("sidebar.vibes"),path:"/reels"},
+        {icon:<Radio size={22}/>,label:t("sidebar.live"),path:"/live"},
+        {icon:<Users size={22}/>,label:t("sidebar.friends"),path:"/friends"},
+        {icon:<Star size={22}/>,label: t("sidebar.following"),path:"/following"},
+        {icon:<Bookmark size={22}/>,label: t("sidebar.saved"),path:"/saved"},
+        {icon:<Heart size={22}/>,label: t("sidebar.liked"), path:"/settings"}
 
     ];
 
@@ -55,15 +55,17 @@ const {
     <aside className={`gp-sidebar ${open ? "open" : "close"}`}>   
         <div className="gp-sidebar-header-content">
             <div className="gp-sidebar-header">
-                <h2>Menu</h2>
+                <h2>{t("sidebar.menu")}</h2>
                 <button onClick={toggleSidebar}  >
                     <ChevronLeft className={open ? "" : "rotate"} />
                 </button>
             </div>
 
-            <button className="gp-create-post">
+            <button className="gp-create-post"
+            onClick={()=>navigate("create")}
+            >
                 <PlusCircle size={22}/>
-                {open && "Create Post"}
+                {open && t("sidebar.post_label")}
             </button>
         </div>
 
@@ -101,17 +103,17 @@ const {
         <Link to="/profile" className="gp-sidebar-footer-profile-link">
 
             <div className="gp-sidebar-footer-profile-info">
-                <div className="gp-sidebar-footer-profile-icon">
-                    <User size={20} />
-                </div>
+                <div  className="gp-sidebar-footer-profile-photo">
+                     <img src={exProfile} alt={t("sidebar.profile")} />
+                 </div>
                 {open && (
                 <>
                 <div className="gp-sidebar-footer-profile-text">
                     <span className="gp-sidebar-footer-profile-title">
-                        Profile
+                        {t("sidebar.profile")} 
                     </span>
                     <small>
-                         Your posts & activity
+                         {t("sidebar.profile_label")} 
                     </small>
                 </div>
                  </> ) }
@@ -133,10 +135,10 @@ const {
                 <>
                 <div className="gp-sidebar-footer-profile-text">
                     <span className="gp-sidebar-footer-profile-title">
-                       Join {appConfig.title}
+                       {t("sidebar.join")} {appConfig.title}
                     </span>
                     <small>
-                           Sign in or sign up
+                           {t("sidebar.join_label")} 
                     </small>
                 </div>
                  </> ) }
