@@ -1,408 +1,504 @@
-// pages/CreatePost/CreatePost.tsx
+import {useRef, useState} from "react";
 
-import { useRef, useState, ChangeEvent } from "react";
-import {
-    ArrowLeft,
-    Globe,
-    Users,
-    Lock,
-    Image,
-    Video,
-    Smile,
-    MapPin,
-    X,
-    Loader2
-} from "lucide-react";
+import {ArrowLeft, Globe, Image, Lock, MapPin, Smile, UploadCloud, Users, Video, X} from "lucide-react";
+
+import {useNavigate} from "react-router-dom";
+
 
 import "@/styles/CreatePost.css";
 
-type Visibility = "public" | "friends" | "private";
 
-interface PreviewMedia {
+type Visibility =
+    | "public"
+    | "friends"
+    | "private";
+
+
+type MediaType =
+    | "image"
+    | "video";
+
+
+interface MediaPreview {
+
     file: File;
+
     url: string;
-    type: "image" | "video";
+
+    type: MediaType;
+
 }
+
 
 export default function CreatePost() {
 
+    const navigate = useNavigate();
+
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
     const [content, setContent] = useState("");
+
+    const [media, setMedia] = useState<MediaPreview[]>([]);
 
     const [visibility, setVisibility] =
         useState<Visibility>("public");
 
-    const [allowComments, setAllowComments] =
-        useState(true);
-
-    const [loading, setLoading] =
+    const [dragActive, setDragActive] =
         useState(false);
-
-    const [media, setMedia] =
-        useState<PreviewMedia[]>([]);
-
-    const imageInputRef =
-        useRef<HTMLInputElement>(null);
-
-    const videoInputRef =
-        useRef<HTMLInputElement>(null);
 
     const textareaRef =
         useRef<HTMLTextAreaElement>(null);
 
-    //---------------------------------------------------
-    // Auto Expand
-    //---------------------------------------------------
-
-    function handleTextChange(
-        e: ChangeEvent<HTMLTextAreaElement>
-    ) {
-
-        setContent(e.target.value);
-
-        const textarea = textareaRef.current;
-
-        if (!textarea) return;
-
+    const resizeTextarea = () => {
+        const textarea =
+            textareaRef.current;
+        if (!textarea)
+            return;
         textarea.style.height = "auto";
         textarea.style.height =
             textarea.scrollHeight + "px";
-    }
 
-    //---------------------------------------------------
-    // Images
-    //---------------------------------------------------
+    };
 
-    function handleImages(
-        e: ChangeEvent<HTMLInputElement>
-    ) {
 
-        if (!e.target.files) return;
+    const handleFiles = (
+        files: FileList | null
+    ) => {
 
-        const files = Array.from(e.target.files);
 
-        const previews = files.map(file => ({
-            file,
-            url: URL.createObjectURL(file),
-            type: "image" as const
-        }));
+        if (!files)
+            return;
 
-        setMedia(prev => [...prev, ...previews]);
-    }
 
-    //---------------------------------------------------
-    // Video
-    //---------------------------------------------------
+        const selected =
+            Array.from(files);
 
-    function handleVideo(
-        e: ChangeEvent<HTMLInputElement>
-    ) {
 
-        if (!e.target.files?.length) return;
+        const previews =
+            selected.map(file => ({
 
-        const file = e.target.files[0];
+
+                file,
+
+
+                url:
+                    URL.createObjectURL(file),
+
+
+                type:
+                    file.type.startsWith("video")
+                        ? "video"
+                        : "image"
+
+
+            }));
+
 
         setMedia(prev => [
+
             ...prev,
-            {
-                file,
-                url: URL.createObjectURL(file),
-                type: "video"
-            }
+
+            ...previews
+
         ]);
-    }
 
-    //---------------------------------------------------
-    // Remove media
-    //---------------------------------------------------
+    };
 
-    function removeMedia(index: number) {
 
-        setMedia(prev =>
-            prev.filter((_, i) => i !== index)
+    const removeMedia = (
+        index: number
+    ) => {
+
+
+        setMedia(prev => {
+
+            const item = prev[index];
+            URL.revokeObjectURL(item.url);
+            return prev.filter(
+                (_, i) => i !== index
+            );
+        });
+
+    };
+
+
+    const handleDrop = (
+        e: React.DragEvent<HTMLDivElement>
+    ) => {
+
+        e.preventDefault();
+
+        setDragActive(false);
+        handleFiles(
+            e.dataTransfer.files
         );
-    }
 
-    //---------------------------------------------------
-    // Publish
-    //---------------------------------------------------
+    };
 
-    async function publishPost() {
 
-        setLoading(true);
+    const publishPost = () => {
+
+        const formData =
+            new FormData();
+        formData.append(
+            "content",
+            content
+        );
+
+
+        formData.append(
+            "visibility",
+            visibility
+        );
+
+
+        media.forEach(item => {
+
+
+            formData.append(
+                "media",
+                item.file
+            );
+        });
+
+
+        console.log(
+            "Post Data",
+            {
+                content,
+                visibility,
+                media
+            }
+        );
+
 
         /*
-            Spring Boot
-
-            const formData = new FormData();
-
-            formData.append("content", content);
-            formData.append("visibility", visibility);
-            formData.append("allowComments", allowComments.toString());
-
-            media.forEach(item=>{
-                formData.append("files", item.file);
-            });
-
-            await axios.post(
-                "/api/posts",
-                formData,
-                {
-                    headers:{
-                        "Content-Type":"multipart/form-data"
-                    }
-                }
-            );
+            API Spring Boot:
+            POST /api/posts
+            Content-Type:
+            multipart/form-data
         */
 
-        setTimeout(() => {
-            setLoading(false);
-            alert("Ready to connect Spring Boot");
-        }, 1500);
-    }
+    };
 
-    //---------------------------------------------------
 
     return (
 
-        <div className="createPostPage">
+        <main className="gp-create-post-page">
 
-            <div className="createPostCard">
-                {/* HEADER */}
-                   <div className="createPostHeader">
-                       <h2>Create Post</h2>
-                   </div>
+            <header className="gp-create-header">
+                <button
+                    onClick={() => navigate(-1)}
+                    className="gp-back-btn">
+                    <ArrowLeft size={22}/>
+                </button>
+                <h1>
+                    Create Post
+                </h1>
+            </header>
 
-                {/* USER */}
 
-                <div className="postUser">
-                    <div className="userInfo">
-                        <div className="avatar">
-                            JS
-                        </div>
+            <section className="gp-create-card">
 
-                        <div>
-                             <h3>John Smith</h3>
-                            <p>
-                                Share something with
-                                your friends.
-                            </p>
-                        </div>
-                    </div>
+                <div className="gp-author">
 
-                    <div className="visibility">
+                    <img src="https://i.pravatar.cc/100?img=12" alt=""/>
 
-                        <select
-                            value={visibility}
-                            onChange={(e) =>
-                                setVisibility(
-                                    e.target
-                                        .value as Visibility
-                                )
+                    <div>
+                        <h3> John Smith</h3>
+
+
+                        <button className="gp-visibility">
+
+
+                            {
+                                visibility === "public" &&
+                                <Globe size={15}/>
                             }
-                        >
 
-                            <option value="public">
-                                🌍 Public
-                            </option>
 
-                            <option value="friends">
-                                👥 Friends
-                            </option>
+                            {
+                                visibility === "friends" &&
+                                <Users size={15}/>
+                            }
 
-                            <option value="private">
-                                🔒 Private
-                            </option>
 
-                        </select>
+                            {
+                                visibility === "private" &&
+                                <Lock size={15}/>
+                            }
+
+
+                            {
+                                visibility
+                            }
+
+                        </button>
+
 
                     </div>
+
 
                 </div>
 
-                {/* TEXTAREA */}
 
                 <textarea
-
                     ref={textareaRef}
-
-                    className="postInput"
-
                     value={content}
-
-                    onChange={handleTextChange}
+                    onChange={(e) => {
+                        setContent(e.target.value);
+                        resizeTextarea();
+                    }}
 
                     placeholder="What's happening?"
-
-                    rows={4}
+                    className="gp-post-textarea"
 
                 />
 
-                {/* ACTIONS */}
 
-                <div className="postActions">
+                {
+                    media.length > 0 && (
 
-                    <button
-                        onClick={() =>
-                            imageInputRef.current?.click()
-                        }
-                    >
+                        <div className="gp-media-preview">
 
-                        <Image size={20} />
+                            {
+                                media.map(
+                                    (item, index) => (
 
-                        Photos
+
+                                        <div
+                                            className="gp-media-item"
+                                            key={item.url}
+                                        >
+
+
+                                            {
+                                                item.type === "image" ?
+
+                                                    <img
+                                                        src={item.url}
+                                                        alt=""
+                                                    />
+
+                                                    :
+
+                                                    <video
+                                                        src={item.url}
+                                                        controls
+                                                    />
+
+                                            }
+
+
+                                            <button
+                                                onClick={() => removeMedia(index)}>
+                                                <X size={16}/>
+                                            </button>
+
+                                        </div>
+
+
+                                    )
+                                )
+
+                            }
+
+
+                        </div>
+
+
+                    )
+                }
+
+
+                <div
+
+                    className={
+                        dragActive
+
+                            ?
+                            "gp-drop-zone active"
+
+                            :
+
+                            "gp-drop-zone"
+
+                    }
+
+
+                    onDragOver={(e) => {
+
+                        e.preventDefault();
+
+                        setDragActive(true);
+
+                    }}
+
+
+                    onDragLeave={() => {
+
+                        setDragActive(false);
+
+                    }}
+
+
+                    onDrop={handleDrop}
+
+
+                    onClick={() => {
+
+                        fileInputRef.current?.click();
+
+                    }}
+
+                >
+
+
+                    <UploadCloud size={30}/>
+
+
+                    <p>
+
+                        Drag & drop photos or videos
+
+                    </p>
+
+
+                    <span>
+                        or click to select
+                    </span>
+
+
+                </div>
+
+
+                <input
+
+                    ref={fileInputRef}
+
+                    hidden
+
+                    type="file"
+
+                    multiple
+
+                    accept="
+                    image/*
+                    ,video/*
+                    "
+
+                    onChange={(e) =>
+                        handleFiles(
+                            e.target.files
+                        )
+                    }
+
+                />
+
+
+                <div className="gp-post-tools">
+
+
+                    <button>
+
+                        <Image/>
+
+                        Photo
 
                     </button>
 
-                    <button
-                        onClick={() =>
-                            videoInputRef.current?.click()
-                        }
-                    >
 
-                        <Video size={20} />
+                    <button>
+
+                        <Video/>
 
                         Video
 
                     </button>
 
+
                     <button>
 
-                        <Smile size={20} />
+                        <Smile/>
 
                         Feeling
 
                     </button>
 
+
                     <button>
 
-                        <MapPin size={20} />
+                        <MapPin/>
 
                         Location
 
                     </button>
 
-                </div>
-
-                <input
-                    ref={imageInputRef}
-                    type="file"
-                    multiple
-                    hidden
-                    accept="image/*"
-                    onChange={handleImages}
-                />
-
-                <input
-                    ref={videoInputRef}
-                    type="file"
-                    hidden
-                    accept="video/*"
-                    onChange={handleVideo}
-                />
-
-                {/* PREVIEW */}
-
-                {media.length > 0 && (
-
-                    <div className="previewContainer">
-
-                        {media.map((item, index) => (
-
-                            <div
-                                key={index}
-                                className="previewItem"
-                            >
-
-                                <button
-                                    className="removeMedia"
-                                    onClick={() =>
-                                        removeMedia(index)
-                                    }
-                                >
-                                    <X size={16} />
-                                </button>
-
-                                {item.type === "image" ? (
-
-                                    <img
-                                        src={item.url}
-                                        alt=""
-                                    />
-
-                                ) : (
-
-                                    <video
-                                        controls
-                                        src={item.url}
-                                    />
-
-                                )}
-
-                            </div>
-
-                        ))}
-
-                    </div>
-
-                )}
-
-                {/* OPTIONS */}
-
-                <div className="commentOption">
-
-                    <label>
-
-                        <input
-                            type="checkbox"
-                            checked={allowComments}
-                            onChange={() =>
-                                setAllowComments(
-                                    !allowComments
-                                )
-                            }
-                        />
-
-                        Allow comments
-
-                    </label>
 
                 </div>
 
-                {/* FOOTER */}
 
-                <div className="footerButtons">
+                <div className="gp-visibility-options">
+
 
                     <button
-                        className="cancelButton"
+
+                        onClick={() =>
+                            setVisibility("public")
+                        }
+
                     >
-                        Cancel
+                        🌎 Public
                     </button>
+
 
                     <button
-                        className="publishButton"
-                        onClick={publishPost}
-                        disabled={loading}
+
+                        onClick={() =>
+                            setVisibility("friends")
+                        }
+
                     >
-
-                        {loading ? (
-                            <>
-                                <Loader2
-                                    size={18}
-                                    className="spin"
-                                />
-                                Publishing...
-                            </>
-                        ) : (
-                            "Publish"
-                        )}
-
+                        👥 Friends
                     </button>
+
+
+                    <button
+
+                        onClick={() =>
+                            setVisibility("private")
+                        }
+
+                    >
+                        🔒 Only me
+                    </button>
+
 
                 </div>
 
-            </div>
 
-        </div>
+                <button
+
+                    disabled={
+                        !content &&
+                        media.length === 0
+                    }
+
+                    onClick={publishPost}
+
+                    className="gp-publish-btn"
+
+                >
+
+                    Publish
+
+                </button>
+
+
+            </section>
+
+
+        </main>
 
     );
 

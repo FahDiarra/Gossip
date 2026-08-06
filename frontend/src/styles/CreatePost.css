@@ -1,420 +1,526 @@
-/* ==========================================
-   CreatePost.css
-========================================== */
-
-
-
-.createPostPage {
-   
-    padding: 40px 20px;
-    background: #f3f4f6;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+.gp-create-post-page{
+    background:var(--bg);
 }
 
-.createPostCard {
-    width: 100%;
-    max-width: 1200px;
-    background: #fff;
-    border-radius: 18px;
-    box-shadow: 0 10px 35px rgba(0, 0, 0, .08);
-    overflow: hidden;
+.gp-create-header{
+    max-width:1200px;
+    margin:0 auto 25px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+
 }
-
-/* ======================
-        HEADER
-====================== */
-
-.createPostHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 22px 28px;
-    border-bottom: 1px solid #ececec;
-}
-
-.createPostHeader h2 {
-    font-size: 22px;
-    font-weight: 700;
-    color: #222;
+.gp-create-header h1{
+    font-size:28px;
+    font-weight:700;
+    margin:0;
 }
 
 
 
-/* ======================
-        USER
-====================== */
-
-.postUser {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 22px 28px;
+.gp-back-btn{
+    width:44px;
+    height:44px;
+    border:none;
+    border-radius:50%;
+    background:#181c28;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:.25s;
 }
 
-.userInfo {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+.gp-back-btn:hover{
+    background:#252c3e;
+    transform:translateX(-3px);
 }
 
-.avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #5d5fef, #7d53ff);
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* CARD */
+
+.gp-create-card{
+    max-width:1200px;
+    margin:auto;
+    background:#121620;
+    border:1px solid #252b3d;
+    border-radius:22px;
+    padding:25px;
+    box-shadow:
+            0 20px 50px rgba(0,0,0,.25);
 }
 
-.userInfo h3 {
-    font-size: 17px;
-    margin-bottom: 4px;
+/* USER */
+
+.gp-author{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:20px;
 }
 
-.userInfo p {
-    color: #777;
-    font-size: 14px;
+.gp-author img{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    object-fit:cover;
 }
 
-.visibility select {
-    border: 1px solid #ddd;
-    padding: 10px 14px;
-    border-radius: 10px;
-    background: white;
-    cursor: pointer;
-    font-size: 14px;
-    outline: none;
+.gp-author h3{
+    margin:0 0 5px;
+    font-size:16px;
 }
 
-/* ======================
-        TEXTAREA
-====================== */
-
-.postInput {
-    width: calc(100% - 56px);
-    margin: 0 28px;
-    resize: none;
-    min-height: 170px;
-    border: 1px solid #e4e4e4;
-    border-radius: 14px;
-    padding: 18px;
-    font-size: 17px;
-    outline: none;
-    transition: .25s;
-    overflow: hidden;
-    line-height: 1.6;
-    font-family: inherit;
+.gp-visibility{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    border:none;
+    background:#1c2231;
+    color:#b7bfd3;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+    cursor:pointer;
 }
 
-.postInput:focus {
-    border-color: #5d5fef;
-    box-shadow: 0 0 0 4px rgba(93, 95, 239, .15);
+/* TEXTAREA */
+.gp-post-textarea{
+    width:100%;
+    min-height:140px;
+    resize:none;
+    overflow:hidden;
+    border:none;
+    outline:none;
+    background:#171c29;
+    border-radius:18px;
+    padding:18px;
+    color:white;
+    font-size:17px;
+    line-height:1.5;
+    box-sizing:border-box;
 }
 
-.postInput::placeholder {
-    color: #999;
+.gp-post-textarea::placeholder{
+    color:#697286;
 }
 
-/* ======================
-        ACTIONS
-====================== */
+/* MEDIA PREVIEW */
 
-.postActions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    padding: 25px 28px;
+
+.gp-media-preview{
+    margin-top:20px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
 }
 
-.postActions button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border: none;
-    cursor: pointer;
-    background: #f5f5f5;
-    padding: 12px 18px;
-    border-radius: 12px;
-    transition: .25s;
-    font-size: 14px;
-    color: #333;
+
+
+.gp-media-item{
+    position:relative;
+    height:260px;
+    overflow:hidden;
+    border-radius:18px;
+    background:#090b11;
+
 }
 
-.postActions button:hover {
-    background: #ececff;
-    color: #5d5fef;
-    transform: translateY(-2px);
+
+.gp-media-item img,
+.gp-media-item video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
-/* ======================
-        PREVIEW
-====================== */
 
-.previewContainer {
-    margin: 0 28px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
-    gap: 16px;
-    padding-bottom: 25px;
+
+.gp-media-item button{
+
+    position:absolute;
+
+    top:10px;
+
+    right:10px;
+
+    width:34px;
+
+    height:34px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:rgba(0,0,0,.6);
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    cursor:pointer;
+
 }
 
-.previewItem {
-    position: relative;
-    border-radius: 14px;
-    overflow: hidden;
-    background: #eee;
-    animation: fade .35s ease;
+
+
+
+
+/* DROP ZONE */
+
+
+.gp-drop-zone{
+
+    margin-top:20px;
+
+    height:160px;
+
+    border:2px dashed #30384d;
+
+    border-radius:18px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:#8c95aa;
+
+    cursor:pointer;
+
+    transition:.25s;
+
 }
 
-.previewItem img,
-.previewItem video {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
+
+
+.gp-drop-zone svg{
+
+    color:#ff2d55;
+
 }
 
-.removeMedia {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(0,0,0,.65);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: .2s;
+
+
+.gp-drop-zone p{
+
+    margin:0;
+
+    font-weight:600;
+
+    color:white;
+
 }
 
-.removeMedia:hover {
-    background: #ff3b30;
+
+
+.gp-drop-zone span{
+
+    font-size:13px;
+
 }
 
-/* ======================
-      COMMENTS
-====================== */
 
-.commentOption {
-    padding: 0 28px 30px;
-    font-size: 15px;
-    color: #333;
+
+.gp-drop-zone:hover,
+.gp-drop-zone.active{
+
+    border-color:#ff2d55;
+
+    background:#171b29;
+
 }
 
-.commentOption label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
+
+
+
+
+
+
+/* ACTIONS */
+
+
+.gp-post-tools{
+
+    margin-top:20px;
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    padding-bottom:20px;
+
+    border-bottom:1px solid #252b3d;
+
 }
 
-.commentOption input {
-    width: 18px;
-    height: 18px;
+
+
+.gp-post-tools button{
+
+    height:42px;
+
+    padding:0 15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#1a2030;
+
+    color:#c5ccdc;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
 }
 
-/* ======================
-        FOOTER
-====================== */
 
-.footerButtons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    padding: 24px 28px;
-    border-top: 1px solid #ececec;
+
+.gp-post-tools button:hover{
+
+    background:#242c42;
+
+    color:white;
+
 }
 
-.cancelButton {
-    border: none;
-    background: #f3f3f3;
-    padding: 12px 26px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 15px;
-    transition: .25s;
+
+
+.gp-post-tools svg{
+
+    width:19px;
+
 }
 
-.cancelButton:hover {
-    background: #ddd;
+
+
+
+
+
+/* VISIBILITY */
+
+
+.gp-visibility-options{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-top:20px;
+
 }
 
-.publishButton {
-    border: none;
-    background: linear-gradient(135deg,#5d5fef,#7d53ff);
-    color: white;
-    padding: 12px 32px;
-    border-radius: 12px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: .25s;
+
+
+.gp-visibility-options button{
+
+    flex:1;
+
+    height:42px;
+
+    border-radius:12px;
+
+    border:1px solid #30384d;
+
+    background:#171c29;
+
+    color:#b8c0d2;
+
+    cursor:pointer;
+
+    transition:.25s;
+
 }
 
-.publishButton:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(93,95,239,.35);
+
+
+.gp-visibility-options button:hover{
+
+    border-color:#ff2d55;
+
+    color:white;
+
 }
 
-.publishButton:disabled {
-    opacity: .7;
-    cursor: not-allowed;
+
+
+
+
+
+/* PUBLISH */
+
+
+.gp-publish-btn{
+
+    width:100%;
+
+    height:52px;
+
+    margin-top:25px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:
+            linear-gradient(
+                    135deg,
+                    #ff2d55,
+                    #7c4dff
+            );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s;
+
 }
 
-/* ======================
-        LOADER
-====================== */
 
-.spin {
-    animation: spin 1s linear infinite;
+
+.gp-publish-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+            0 12px 30px rgba(255,45,85,.3);
+
 }
 
-/* ======================
-      SCROLLBAR
-====================== */
 
-::-webkit-scrollbar {
-    width: 8px;
+
+.gp-publish-btn:disabled{
+
+    opacity:.5;
+
+    cursor:not-allowed;
+
+    transform:none;
+
 }
 
-::-webkit-scrollbar-thumb {
-    background: #c9c9c9;
-    border-radius: 20px;
-}
 
-::-webkit-scrollbar-thumb:hover {
-    background: #999;
-}
 
-/* ======================
-      ANIMATIONS
-====================== */
 
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
+
+
+/* TABLET */
+
+
+@media(max-width:700px){
+
+
+    .gp-create-post-page{
+
+        padding:85px 12px 30px;
+
     }
-    to {
-        transform: rotate(360deg);
+
+
+
+    .gp-create-card{
+
+        padding:18px;
+
+        border-radius:18px;
+
     }
+
+
+
+    .gp-create-header h1{
+
+        font-size:22px;
+
+    }
+
+
+
+    .gp-media-preview{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+
+    .gp-media-item{
+
+        height:300px;
+
+    }
+
+
+
+    .gp-visibility-options{
+
+        flex-direction:column;
+
+    }
+
+
+
+    .gp-post-tools button{
+
+        flex:1;
+
+        justify-content:center;
+
+    }
+
+
 }
 
-@keyframes fade {
-    from {
-        opacity: 0;
-        transform: scale(.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
 
-/* ======================
-      RESPONSIVE
-====================== */
 
-@media (max-width: 768px) {
 
-    .createPostPage {
-        padding: 0;
-        background: white;
+
+/* SMALL MOBILE */
+
+
+@media(max-width:420px){
+
+
+    .gp-post-tools{
+
+        display:grid;
+
+        grid-template-columns:1fr 1fr;
+
     }
 
-    .createPostCard {
-        border-radius: 0;
-        box-shadow: none;
-        min-height: 100vh;
+
+
+    .gp-drop-zone{
+
+        height:140px;
+
     }
 
-    .createPostHeader,
-    .postUser,
-    .postActions,
-    .footerButtons {
-        padding-left: 18px;
-        padding-right: 18px;
-    }
 
-    .postInput {
-        width: calc(100% - 36px);
-        margin: 0 18px;
-        font-size: 16px;
-    }
 
-    .previewContainer {
-        margin: 0 18px;
-        grid-template-columns: repeat(2,1fr);
-    }
-
-    .footerButtons {
-        flex-direction: column-reverse;
-    }
-
-    .publishButton,
-    .cancelButton {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .postUser {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 18px;
-    }
-
-    .visibility {
-        width: 100%;
-    }
-
-    .visibility select {
-        width: 100%;
-    }
-
-    .postActions {
-        gap: 10px;
-    }
-
-    .postActions button {
-        flex: 1 1 calc(50% - 10px);
-        justify-content: center;
-    }
-}
-
-@media (max-width: 500px) {
-
-    .previewContainer {
-        grid-template-columns: 1fr;
-    }
-
-    .avatar {
-        width: 50px;
-        height: 50px;
-        font-size: 17px;
-    }
-
-    .createPostHeader h2 {
-        font-size: 19px;
-    }
-
-    .postInput {
-        min-height: 150px;
-    }
-
-    .postActions button {
-        width: 100%;
-        flex: 100%;
-    }
 }
