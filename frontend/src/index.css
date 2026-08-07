@@ -41,7 +41,12 @@
   --sidebar-item-bg-hover: #f3f4f6;
   --sidebar-item-active-bg:#e5e7eb;
 
-
+  /* Main btn */
+  --main-btn-bg:  #eef2f7;
+  --main-btn-bg-hover: rgb(155 152 156 / 0.78);
+  --main-btn-text-color: #1f2937;
+  --main-btn-text-hover: #111827;
+  --main-btn-border-color: rgb(155 152 156);
 
        /*Input*/
       --input-bg: #f3f4f6;
@@ -79,7 +84,8 @@
       --nav-btn-bg: #181c28;
       --nav-btn-bg-hover: #252c3e;
       --nav-btn-color: #f3f4f6;
-       
+
+
       /*Input*/
       --input-bg: #181c28;
       --input-hover: #202636;
@@ -92,7 +98,15 @@
       --sidebar-btn-color: #f3f4f6;
 
       --sidebar-item-bg-hover:#181c28 ;
-      --sidebar-item-active-bg:#252c3e ; 
+      --sidebar-item-active-bg:#252c3e ;
+
+    /*Main btn*/
+    --main-btn-bg: #181c28;;
+    --main-btn-bg-hover: #252c3e;
+    --main-btn-text-color: #f3f4f6;
+    --main-btn-text-hover: #8b95a7;
+    --main-btn-border-color: #374151;
+
 
     --primary: #3b82f6;
     --primary-hover: #60a5fa;

@@ -56,8 +56,9 @@ const {
         <div className="gp-sidebar-header-content">
             <div className="gp-sidebar-header">
                 <h2>{t("sidebar.menu")}</h2>
+
                 <button onClick={toggleSidebar}  >
-                    <ChevronLeft className={open ? "" : "rotate"} />
+                    <ChevronLeft size={22} className={open ? "" : "rotate"} />
                 </button>
             </div>
 
@@ -65,7 +66,7 @@ const {
             onClick={()=>navigate("create")}
             >
                 <PlusCircle size={22}/>
-                {open && t("sidebar.post_label")}
+              {open && <span>{t("sidebar.post_label")} </span>}
             </button>
         </div>
 
@@ -120,7 +121,7 @@ const {
              </div>
 
             {open && (
-                <ChevronRight className="gp-sidebar-footer-profile-arrow" size={20} />
+                <ChevronRight  className="gp-sidebar-footer-profile-arrow" size={22} />
             )}
         </Link>
     </div>
@@ -138,14 +139,14 @@ const {
                        {t("sidebar.join")} {appConfig.title}
                     </span>
                     <small>
-                           {t("sidebar.join_label")} 
+                           {t("sidebar.join_label")}
                     </small>
                 </div>
                  </> ) }
              </div>
 
             {open && (
-                <ChevronRight className="gp-sidebar-footer-profile-arrow" size={20} />
+                <ChevronRight  className="gp-sidebar-footer-profile-arrow" size={22} />
             )}
         </Link>
     </div>

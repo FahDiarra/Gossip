@@ -1,11 +1,9 @@
 
 import { Link } from "react-router-dom";
-import { useState } from "react";
-
 //context
 import {useTheme} from "@/context/ThemeContext";
 //hooks
-import useIsMobile from "@/hooks/useIsMobile";
+
 import useToggleDropdown from "@/hooks/useToggleDown";
 import BtnWithTooltip from "@/components/BtnWithTooltip.tsx";
 //config
@@ -51,7 +49,7 @@ export default function Navbar() {
 const { theme, setTheme } = useTheme();
  const {t}=useTranslation();
 
-const isMobile = useIsMobile(900);
+
 
 const changeLanguage = (lang:string)=>{
   i18n.changeLanguage(lang);

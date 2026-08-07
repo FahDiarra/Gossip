@@ -2,7 +2,6 @@
 import {
     Calendar,
     MapPin,
-    Link as LinkIcon,
     Briefcase,
     Camera,
     Settings,
@@ -12,9 +11,16 @@ import {
     Video,
     Info,
     UserPlus,
-    MessagesSquare
+    MessagesSquare,
+    Heart,
+    MessageCircle,
+    Bookmark,
+    Repeat2,
+    Eye,
+    Clock3
 } from "lucide-react";
 import "@/styles//Profile.css";
+import { motion } from "framer-motion";
 
 import { useState } from "react";
 
@@ -83,16 +89,19 @@ export default function Profile() {
 
     ];
 
-
-
     const videos = [
-
         "https://example.com/video1.mp4",
-
         "https://example.com/video2.mp4"
-
     ];
+    const [likedPosts, setLikedPosts] = useState<number[]>([]);
 
+    const toggleLike = (id: number) => {
+        setLikedPosts(prev =>
+            prev.includes(id)
+                ? prev.filter(x => x !== id)
+                : [...prev, id]
+        );
+    };
 
 
 
@@ -134,21 +143,21 @@ export default function Profile() {
                         </div>
 
                         <div className="gp-profile-actions">
-                            <button className="primary">
+                            <button className="gp-profile-action-btn">
                                 <MessagesSquare size={18} />
                                 Message
                             </button>
-                            <button className="primary">
+                            <button className="follow">
                                 <UserPlus size={18} />
                                 Follow
                             </button>
 
-                            <button className="primary">
+                            <button className="gp-profile-action-btn">
                                 <Settings size={18} />
                                 Edit Profile
                             </button>
 
-                            <button>
+                            <button className="gp-profile-action-btn">
                                 <Share2 size={18} />
                             </button>
 
@@ -243,126 +252,120 @@ export default function Profile() {
             {/* CONTENT */}
 
             <section className="gp-profile-content">
-
                 {/* LEFT */}
-
-                <aside className="gp-profile-left">
-
-                    <div className="gp-card">
-
-                        <h3>Intro</h3>
-
-                        <p>{user.bio}</p>
-
-                    </div>
-
-                    <div className="gp-card">
-
-                        <h3>Friends</h3>
-
-                        <button>
-
-                            <UserPlus size={18} />
-                            Find Friends
-                        </button>
-
-                    </div>
-
-                </aside>
-
-                {/* RIGHT */}
 
                 <section className="gp-profile-feed">
 
-                    {activeTab === "posts" && (
+                    {activeTab === "posts" && ( <>
 
-                        <>
 
-                            {
+                        {
                                 activeTab === "posts" && (
+                                    posts.map(post=>{
 
-                                    posts.map(post=>(
+                                        const liked = likedPosts.includes(post.id);
 
-                                        <article
-                                            className="gp-profile-post"
-                                            key={post.id}
-                                        >
 
-                                            <div className="gp-post-user">
+                                        return(
 
-                                                <img
-                                                    src={user.avatar}
-                                                    alt=""
-                                                />
-
+                                        <article className="gp-profile-post"  key={post.id}  >
+                                           <div className="gp-post-header">
+                                             <div className="gp-post-user">
+                                                <img  src={user.avatar} alt=""   />
                                                 <div>
-
                                                     <strong>
                                                         {user.fullName}
                                                     </strong>
+                                                    <span>{user.username} </span>
+                                                </div>
+                                              </div>
 
-                                                    <span>
-                        2h ago
-                    </span>
+                                               <button className="follow">
+                                                   <UserPlus size={18} />
+                                                   Follow
+                                               </button>
+                                           </div>
 
+                                            <p> {post.text} </p>
+
+                                            <img  className="gp-post-image"
+                                                src={post.image}  alt=""   />
+                                            <div className="gp-post-stats">
+
+                                                <div className="gp-post-stat">
+                                                    <Eye size={16}/>
+                                                    <span>23.4K</span>
                                                 </div>
 
+                                                <span className="gp-post-divider"></span>
+
+                                                <div className="gp-post-stat">
+                                                    <Clock3 size={15}/>
+                                                    <span>2h ago</span>
+                                                </div>
 
                                             </div>
 
-
-
-                                            <p>
-                                                {post.text}
-                                            </p>
-
-
-
-                                            <img
-
-                                                className="gp-post-image"
-
-                                                src={post.image}
-
-                                                alt=""
-
-                                            />
-
-
                                             <div className="gp-post-actions">
 
+                                                <div className="gp-post-actions-left">
 
-                                                <button>
-                                                    ❤️ Like
+                                                    <motion.button
+                                                        whileTap={{ scale: .75 }}
+                                                        whileHover={{ scale: 1.05 }}
+                                                        className={`gp-action-btn ${liked ? "liked" : ""}`}
+                                                        onClick={() => toggleLike(post.id)}
+                                                    >
+
+                                                        <motion.div
+                                                            animate={
+                                                                liked
+                                                                    ? {
+                                                                        scale: [1, 1.5, 1],
+                                                                        rotate: [0, -15, 15, 0]
+                                                                    }
+                                                                    : {}
+                                                            }
+                                                            transition={{
+                                                                duration: .4
+                                                            }}
+                                                        >
+                                                            <Heart
+                                                                size={19}
+                                                                fill={liked ? "currentColor" : "none"}
+                                                            />
+                                                        </motion.div>
+
+                                                        <span>12.5K</span>
+
+                                                    </motion.button>
+
+                                                    <button className="gp-action-btn">
+                                                        <MessageCircle size={19}/>
+                                                        <span>354</span>
+                                                    </button>
+
+                                                    <button className="gp-action-btn">
+                                                        <Bookmark size={19}/>
+                                                        <span>Save</span>
+                                                    </button>
+
+                                                </div>
+
+                                                <button className="gp-action-btn share">
+                                                    <Repeat2 size={19}/>
+                                                    <span>Share</span>
                                                 </button>
-
-
-                                                <button>
-                                                    💬 Comment
-                                                </button>
-
-
-                                                <button>
-                                                    🔁 Share
-                                                </button>
-
 
                                             </div>
 
 
                                         </article>
-
-
-                                    ))
-
-                                )
-
+                                    ) }))
                             }
 
 
-                        </>
-
-                    )}
+                        </> )}
 
                     {activeTab === "photos" && (
                         <>
@@ -371,74 +374,36 @@ export default function Profile() {
 
                         </div>
                             <div className="gp-photo-grid">
-
-
                                 {
                                     photos.map(photo=>(
-
-
-                                        <img
-
-                                            key={photo}
-
-                                            src={photo}
-
-                                            alt=""
-
-                                        />
-
-
+                                        <img  key={photo}  src={photo}  alt="" />
                                     ))
 
                                 }
-
-
                             </div>
                         </>)}
 
-                    {activeTab === "videos" && (
-               <>
+                    {activeTab === "videos" && ( <>
                         <div className="gp-empty">
-
                             Videos coming soon
-
                         </div>
-                   <div className="gp-video-grid">
+                        <div className="gp-video-grid">
+                           {
+                               videos.map(video=>(
+                                   <div className="gp-video-card" key={video}   >
+                                       <video  controls src={video}   />
+                                   </div>
+                               ))
 
+                           }
+                         </div>
+                        </>)}
 
-                       {
-                           videos.map(video=>(
-
-                               <div
-                                   className="gp-video-card"
-                                   key={video}
-                               >
-
-                                   <video
-                                       controls
-                                       src={video}
-                                   />
-
-
-                               </div>
-
-                           ))
-
-                       }
-
-
-                   </div>
-
-               </>
-
-                )}
 
                     {activeTab === "about" && (
 
                         <div className="gp-card">
-
                             <h3>About</h3>
-
                             <p>{user.bio}</p>
 
                             <br />
@@ -456,10 +421,25 @@ export default function Profile() {
                             </p>
 
                         </div>
-
                     )}
 
                 </section>
+                {/* RIGHT */}
+                <aside className="gp-profile-right">
+                    <div className="gp-card">
+                        <h3>Intro</h3>
+                        <p>{user.bio}</p>
+                    </div>
+
+                    <div className="gp-card">
+                        <h3>Friends</h3>
+                        <button>
+                            <UserPlus size={18} />
+                            Find Friends
+                        </button>
+                    </div>
+
+                </aside>
 
             </section>
          </div>
