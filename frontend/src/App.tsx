@@ -12,7 +12,7 @@ import MainLayout from "@/layout/MainLayout";
 
 //pages
 import Home from "@/pages/Home.tsx";
-import Signin from "@/pages/Signin.tsx";
+import Auth from "@/pages/Auth.tsx";
 import Profile from "@/pages/Profile.tsx";
 import CreatePost from "@/pages/CreatePost";
 
@@ -33,7 +33,7 @@ export default function App(){
                    <Route path="/profile" element={<Profile />} />
                    <Route path="/create" element={<CreatePost />} />
                 </Route>
-                <Route path="/signin" element={<Signin />} />
+                <Route path="/signin" element={<Auth />} />
             </Routes>
         </BrowserRouter>
 
