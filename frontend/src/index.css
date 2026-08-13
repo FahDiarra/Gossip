@@ -59,7 +59,20 @@
     --secondary-hover: #475569;
 
  /*Error*/
-  --error-text: #f44336;
+  --error-text: #b54e46;
+  --error-text-bg: rgb(227 168 163 / 0.65);
+  --error-text-border: #c88d89;
+
+/*Success*/
+  --success-text: #286328;
+  --success-text-bg: rgb(181 246 181 / 0.49);
+  --success-text-border: #5cb85c;
+
+
+ /*Warning*/
+  --warning-text: #ffc600;
+  --warning-text-bg: #ffc600;
+  --warning-text-border: #ffc600;
 
 
 }
@@ -113,7 +126,10 @@
     --secondary: #94a3b8;
     --secondary-hover: #cbd5e1;
     /*Error*/
-    --error-text: #f44336;
+    --error-text: #85130a;
+    --error-text-bg: rgb(227 168 163 / 0.68);
+    --error-text-border: #c88d89;
+
 
 
 

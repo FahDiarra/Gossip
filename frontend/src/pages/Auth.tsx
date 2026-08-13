@@ -1,58 +1,159 @@
 
-import { useState } from "react";
+
 import  appConfig  from "@/config/appConfig";
 
+import apiPublic from "@/api/api.public.ts";
 
 
-
-import "@/styles/menu/Signin.css";
-import { Link } from "react-router-dom";
+import "@/styles/menu/Auth.css";
+import { Link,useNavigate } from "react-router-dom";
 
 //Components
-
-  import Signin from "@/components/auth/Signin";
-   import Signup from "@/components/auth/Signup";
+  import Register from "@/components/auth/Register.tsx";
+  import Login from "@/components/auth/Login.tsx";
   import AuthVisual from "@/components/auth/AuthVisual";
 
+//context
+import { useAuth } from "@/context/AuthContext";
 
-type AuthMode = "signin" | "signup";
+type AuthMode = "logIn" | "register";
+
+import { type FormEvent, useState } from "react";
+
+interface RegisterForm {
+    //register
+    name: string;
+    userName:string ;
+    newEmail: string;
+    newPassword: string;
+    //Login
+    email: string;
+    password: string;
+}
+interface RegisterResponseProps {
+    success: boolean;
+    message: string;
+    token: string;
+    user: {
+        public_id: string;
+        name: string;
+        userName: string;
+        email: string;
+    };
+}
+interface LoginResponseProps {
+    success: boolean;
+    message: string;
+    token: string;
+    user: {
+        public_id: string;
+        name: string;
+        userName: string;
+        email: string;
+    };
+
+}
 
 
-export default function Auth() {
 
-    const [mode, setMode] = useState<AuthMode>("signin");
-    //Signin
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+export default function Auth(): React.JSX.Element {
 
-    //Signup
-    const [name, setName] = useState("");
-    const [userName, setUserName] = useState("");
-    const [newEmail, setNewEmail] = useState("");
-    const [newPassword, setNewPassword] = useState("");
+    const {login} = useAuth();
+    const navigate = useNavigate();
+    const [mode, setMode] = useState<AuthMode>("logIn");
+
+    const [loading, setLoading] = useState<boolean>(false);
+
+    //Login
+    const [errorPassword, setErrorPassword] = useState<boolean>(true);
+    const [errorEmail, setErrorEmail] = useState<boolean>(false);
+
+    //Register & Login
+    const [form, setForm] = useState<RegisterForm>({
+        name: "",
+        userName:"",
+        newEmail: "",
+        newPassword: "",
+
+        email: "",
+        password: "",
+    })
 
 
-    const isSignup = mode === "signup";
+    const isSignup = mode === "register";
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+        let newValue = value;
 
-        if (isSignup) {
+        if (name === "userName") {
+            newValue = value
+                .replace(/[^a-zA-Z0-9_@]/g, "")
+                .replace(/(?!^)@/g, "");
 
-            console.log("Create account", {
-                name,
-                email,
-                password
-            });
-
-            return;
+            if (newValue.length > 0 && !newValue.startsWith("@")) {
+                newValue = `@${newValue}`;
+            }
         }
 
-        console.log("Sign in", {
-            email,
-            password
-        });
+
+        setForm((prev) => ({
+            ...prev,
+            [name]: newValue,
+        }));
+
+        if (name === "email") {
+            setErrorEmail(false);
+        }
+
+        if (name === "password") {
+            setErrorPassword(false);
+        }
+    };
+
+
+
+
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+        e.preventDefault();
+
+        if (loading) return;
+        setLoading(true);
+
+        try {
+
+          if (isSignup) {
+              const registerResponse = await apiPublic.post<RegisterResponseProps>(
+                "/auth/register",
+                form
+              );
+                const data = registerResponse.data;
+
+                if (data.success) {
+                login(data.token, data.user);
+                 }
+            return;
+          }
+
+            //login
+            const loginResponse = await apiPublic.post<LoginResponseProps>(
+                "/auth/login", {
+                email: form.email,
+                password: form.password,
+            });
+
+            const data = loginResponse.data;
+            if (data.success) {
+                login(data.token, data.user);
+            }
+
+
+        } catch (error) {
+            console.error(error);
+        } finally {
+            // setLoading(false);
+        }
 
     };
 
@@ -63,15 +164,11 @@ export default function Auth() {
     };
    
 
-
-
-
-
     return (
 
         <main className="gossip-auth">
 
-            <div className="gp-auth-wrapper">
+
             {/* BACKGROUND / VISUAL SIDE */}
             <section className="gossip-auth-visual">
                 <AuthVisual/>
@@ -128,25 +225,26 @@ export default function Auth() {
                     <form className="gossip-auth-form" onSubmit={handleSubmit}  >
 
                         {!isSignup ?(
-                            <Signin
-                                email={email}
-                                setEmail={setEmail}
-                                password={password}
-                                setPassword={setPassword}
+                            <Login
+                                email={form.email}
+                                password={form.password}
+                                errorEmail={errorEmail}
+                                errorPassword={errorPassword}
+                                loading={loading}
+                                handleChange={handleChange}
                             />
                          ):(
-                            <Signup
-                            name={name}
-                            setName={setName}
-                            userName={userName}
-                            setUserName={setUserName}
-                            newEmail={newEmail}
-                            setNewEmail={setNewEmail}
-                            newPassword={newPassword}
-                            setNewPassword={setNewPassword}
+                            <Register
+                            name={form.name}
+                            userName={form.userName}
+                            newEmail={form.newEmail}
+                            newPassword={form.newPassword}
+                            handleChange={handleChange}
+                            loading={loading}
+                            setForm={setForm}
+
                             />
                         )}
-
 
 
 
@@ -163,11 +261,11 @@ export default function Auth() {
                         </span>
                         <button type="button"
                             onClick={() => {
-                                setMode( isSignup ? "signin" : "signup" ); 
+                                setMode( isSignup ? "logIn" : "register" );
                                  }}    >
 
                             {isSignup
-                                ? "Sign in"
+                                ? "Log in"
                                 : "Create account"
                             }
                         </button>
@@ -187,7 +285,7 @@ export default function Auth() {
 
                 </div>
             </section>
-            </div>
+
         </main>
 
     );
