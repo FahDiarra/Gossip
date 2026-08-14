@@ -276,9 +276,9 @@
 }
 
 .gossip-field label {
-    color: var(--secondary-text);
+    color: var(--text);
     font-size: 13px;
-    font-weight: 600;
+    font-weight: bold;
 }
 
 .gossip-input {

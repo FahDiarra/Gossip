@@ -34,11 +34,7 @@ export default function Sidebar() {
     const {t}=useTranslation();
     const navigate = useNavigate();
     const {user,isAuthenticated} = useAuth();
-
-const {
-    open,
-    toggleSidebar
-}=useSidebar();
+    const { open, toggleSidebar }=useSidebar();
 
     const menus = [
 
@@ -108,7 +104,7 @@ const {
         <Link to="/profile" className="gp-sidebar-footer-profile-link">
 
             <div className="gp-sidebar-footer-profile-info">
-                {user?.ProfileImage ? (
+                {user?.profileImage ? (
 
                  <div  className="gp-sidebar-footer-profile-photo">
                      <img src={exProfile} alt={t("sidebar.profile")} />

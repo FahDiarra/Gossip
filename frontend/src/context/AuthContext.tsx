@@ -6,7 +6,7 @@ import {
 } from "react";
 
 export interface UserProps {
-    public_id: string;
+    publicId: string;
     name: string;
     userName: string;
     email: string;

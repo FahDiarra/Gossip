@@ -15,6 +15,7 @@ interface RegisterForm {
     // Register
     name: string;
     userName: string;
+    birthday: string;
     newEmail: string;
     newPassword: string;
 
@@ -37,6 +38,7 @@ interface RegisterProps {
 export default function  Register({
      name,
      userName,
+     birthday,
      newEmail,
      newPassword,
      handleChange,
@@ -51,7 +53,7 @@ const [userNameFocused, setUserNameFocused] = useState<boolean>(false);
 const [userNameValid, setUserNameValid] = useState<boolean>(true);
 const [userNameSuggestion, setUserNameSuggestion] = useState<string[]>(["@john123", "@john_dev", "@john2026"]);
 const [nameFocused, setNameFocused] = useState<boolean>(false);
-
+const [birthdayFocused , setBirthdayFocused] = useState<boolean>(false);
 
     const passwordValid:boolean =
         newPassword.length >= 8 &&
@@ -112,7 +114,7 @@ const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==
     return (<>
 
         <div className="gossip-field">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name:</label>
             <div className="gossip-input">
                 <input id="name" name="name" type="text" placeholder="Your name"
                     value={name}
@@ -134,7 +136,7 @@ const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==
 
 
         <div className="gossip-field">
-            <label htmlFor="userName">Username</label>
+            <label htmlFor="userName">Username:</label>
             <div className="gossip-input">
                 <input id="userName" name="userName" type="text" placeholder="Eg: @username"
                      value={userName}
@@ -149,40 +151,72 @@ const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==
             <div className="errorInput">
                 <small>Error</small>
             </div>
-
              )}
 
 
-             <div className="instructionInput">
-                 {userNameFocused &&(<>
-                     <small>Username must be between 3–30 characters.</small>
-                      <small> Letters and numbers only, no spaces.</small>
-                 </>)}
+                {userNameFocused &&(<>
+                <div className="instructionInput">
+                    <small>Username must be between 3–30 characters.</small>
+                    <small> Letters and numbers only, no spaces.</small>
+                </div>
+                </>)}
 
-                 {!userNameValid && (<>
-                     <small>Suggestions:</small>
-                <ul>
+                {!userNameValid && (<>
+                  <div className="instructionInput">
+                    <small>Suggestions:</small>
+                    <ul>
 
-                    {userNameSuggestion.map((suggestion, index) =>{
-                        const suggestionActive :boolean =userName === suggestion;
-                        return(
-                        <li key={index} >
-                            <button type="button" className={`${suggestionActive ? "suggestionBtnActive" : ""}`} onClick={()=>addSuggestion(suggestion)}>
-                                 {suggestion}
-                            </button>
-                        </li>
-                    ) })}
+                        {userNameSuggestion.map((suggestion, index) =>{
+                            const suggestionActive :boolean =userName === suggestion;
+                            return(
+                                <li key={index} >
+                                    <button type="button" className={`${suggestionActive ? "suggestionBtnActive" : ""}`} onClick={()=>addSuggestion(suggestion)}>
+                                        {suggestion}
+                                    </button>
+                                </li>
+                            ) })}
 
-                </ul>
-                 </>)}
+                    </ul>
+                </div>
+                </>)}
 
 
+
+
+            <div className="gossip-field">
+                <label htmlFor="birthday">Birthday:</label>
+                <div className="gossip-input">
+                    <input
+                        id="birthday"
+                        name="birthday"
+                        type="date"
+                        value={birthday}
+                        onChange={handleChange}
+                        onFocus={() => setBirthdayFocused(true)}
+                        onBlur={() => setBirthdayFocused(false)}
+                        max={new Date(
+                            new Date().getFullYear() - 10,
+                            new Date().getMonth(),
+                            new Date().getDate()
+                        ).toISOString().split("T")[0]}
+                        required
+                    />
+                </div>
+
+                {birthdayFocused && (
+                    <div className="instructionInput">
+                        <small>You must be at least 10 years old to create an account.</small>
+                    </div>
+                )}
             </div>
+
+
+
 
         </div>
 
         <div className="gossip-field">
-            <label htmlFor="newEmail">Email</label>
+            <label htmlFor="newEmail">Email:</label>
             <div className="gossip-input">
                 <Mail size={19}/>
                 <input id="newEmail" type="email" name="newEmail" placeholder="you@example.com"
@@ -202,7 +236,7 @@ const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==
 
         <div className="gossip-field">
             <div className="gossip-password-label">
-                <label htmlFor="newPassword">Password</label>
+                <label htmlFor="newPassword">Password:</label>
             </div>
 
             <div className="gossip-input">
@@ -271,7 +305,7 @@ const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==
 
         <div className="gossip-field">
             <div className="gossip-password-label">
-                <label htmlFor="newPasswordConfirm">Confirm Password </label>
+                <label htmlFor="newPasswordConfirm">Confirm Password:</label>
             </div>
 
             <div className="gossip-input">

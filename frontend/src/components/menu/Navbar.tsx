@@ -1,16 +1,21 @@
 
 import { Link } from "react-router-dom";
+import { motion } from 'framer-motion';
+import { useState } from "react";
+
 //context
 import {useTheme} from "@/context/ThemeContext";
+import { useAuth  } from "@/context/AuthContext";
 //hooks
-
 import useToggleDropdown from "@/hooks/useToggleDown";
 import BtnWithTooltip from "@/components/BtnWithTooltip.tsx";
+
+
 //config
 import appConfig from "@/config/appConfig";
+
 //lang
 import i18n from "@/i18n/langConfig";
-//lang
 import { useTranslation } from "react-i18next";
 
 import {
@@ -24,13 +29,16 @@ import {
   Moon,
   Monitor,
   ChevronRight,
-  ChevronDown
+  ChevronDown,
+    LogOut
 } from "lucide-react";
 
 import "@/styles/menu/Navbar.css";
 
 
 export default function Navbar() {
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const {logout,isAuthenticated} = useAuth();
 
     const {
         open:configOpen,
@@ -147,6 +155,8 @@ const langType = () => i18n.resolvedLanguage;
             <Monitor size={16} />
           </button>
         </div>
+
+
       </div>
 
       {/* Language */}
@@ -194,6 +204,7 @@ const langType = () => i18n.resolvedLanguage;
               </div>
             )}
           </div>
+
         </div>
 
       {/* Location */}
@@ -211,6 +222,49 @@ const langType = () => i18n.resolvedLanguage;
           </div>
         </button>
       </div>
+
+
+        {isAuthenticated &&(
+        <div className="gp-dropdown-item logout">
+            <button
+                className="gp-dropdown-row logout"
+                onClick={() => setIsLoggingOut(true)}
+            >
+                <motion.div
+                    animate={
+                        isLoggingOut
+                            ? {
+                                x: 200,
+                                scale: 0.8,
+                                opacity: 0,
+                            }
+                            : {
+                                x: 0,
+                                scale: 1,
+                                opacity: 1,
+                            }
+                    }
+                    transition={{
+                        duration: 0.35,
+                        ease: "easeInOut",
+                    }}
+
+                    onAnimationComplete={():void => {
+                        if (isLoggingOut) {
+                            logout();
+                            setIsLoggingOut(false);
+                        }
+                    }}
+
+                >
+
+                    <LogOut size={17} />
+                </motion.div>
+
+                <span>Log out</span>
+            </button>
+        </div>
+        )}
 
     </div>
   )}

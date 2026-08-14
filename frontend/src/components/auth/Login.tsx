@@ -41,7 +41,7 @@ export default function Login({
     return (
       <>
         <div className="gossip-field">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email:</label>
             <div className="gossip-input">
                 <Mail size={19}/>
                 <input id="email" type="email" name="email"  placeholder="you@example.com"
@@ -53,7 +53,7 @@ export default function Login({
         </div>
 
     <div className="gossip-field">
-        <label htmlFor="password">Password </label>
+        <label htmlFor="password">Password:</label>
         <div className="gossip-input">
             <Lock size={19} />
             <input  id="password" name="password"

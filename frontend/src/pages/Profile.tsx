@@ -26,7 +26,8 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 //Context
-import { useAuth } from "@/context/AuthContext";
+import {useAuth, type UserProps} from "@/context/AuthContext";
+import {useParams} from "react-router-dom";
 
 
 // import PostCard from "@/components/Post/PostCard";
@@ -34,10 +35,16 @@ import { useAuth } from "@/context/AuthContext";
 export default function Profile() {
 
     const [activeTab, setActiveTab] = useState("posts");
-    const { user } = useAuth();
+    const { user,isAuthenticated } = useAuth();
+    const { profileId } = useParams();
+    const [profileUser, setProfileUser] = useState<UserProps | null>(null);
 
 
 
+
+
+    const isMyProfile = !profileId;
+    const displayUser = isMyProfile?user   : profileUser;
 
     const userTest = {
         fullName: "John Smith",
@@ -83,17 +90,11 @@ export default function Profile() {
 
 
     const photos = [
-
         "https://images.unsplash.com/photo-1516321318423-f06f85e504b3",
-
         "https://images.unsplash.com/photo-1521737711867-e3b97375f902",
-
         "https://images.unsplash.com/photo-1524504388940-b1c1722653e1",
-
         "https://images.unsplash.com/photo-1534528741775-53994a69daeb",
-
         "https://images.unsplash.com/photo-1500648767791-00dcc994a43e",
-
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d"
 
     ];
@@ -122,10 +123,11 @@ export default function Profile() {
 
             <section className="gp-profile-cover">
                 <div className="gp-profile-cover__wrapper">
-                  {/*<img src={userTest.cover} alt=""   />*/}
-                    <div className="gp-no-cover">
-
-                    </div>
+                    {displayUser?.coverImage?(
+                  <img src={userTest.cover} alt=""   />
+                    ):(
+                    <div className="gp-profile-no-cover"></div>
+                    )}
                    <button className="gp-cover-edit">
                     <Camera size={18} />
                     <span>Change cover</span>
@@ -137,9 +139,12 @@ export default function Profile() {
 
             <section className="gp-profile-header">
                 <div className="gp-profile-avatar">
-                    {/*<img src={userTest.avatar} alt=""   />*/}
-                    <User size={100} className="gp-profile-avatar__avatar" />
 
+                    {displayUser?.profileImage?(
+                    <img src={userTest.avatar} alt=""   />
+                    ):(
+                    <User size={100} className="gp-profile-avatar__avatar" />
+                    )}
                     <button>
                         <Camera size={18} />
                     </button>
@@ -149,22 +154,15 @@ export default function Profile() {
                     <div className="gp-profile-top">
                         <div>
                             <h1>
-                                {user?.name}
+                                {displayUser?.name}
                             </h1>
                             <span>
-                                {user?.userName}
+                                {displayUser?.userName}
                             </span>
                         </div>
 
                         <div className="gp-profile-actions">
-                            <button className="gp-profile-action-btn">
-                                <MessagesSquare size={18} />
-                                Message
-                            </button>
-                            <button className="follow">
-                                <UserPlus size={18} />
-                                Follow
-                            </button>
+                            {isMyProfile ? (<>
 
                             <button className="gp-profile-action-btn">
                                 <Settings size={18} />
@@ -174,6 +172,18 @@ export default function Profile() {
                             <button className="gp-profile-action-btn">
                                 <Share2 size={18} />
                             </button>
+
+                            </>):(<>
+                            <button className="gp-profile-action-btn">
+                                <MessagesSquare size={18} />
+                                Message
+                            </button>
+                            <button className="follow">
+                                <UserPlus size={18} />
+                                Follow
+                            </button>
+                            </>)}
+
 
                         </div>
                     </div>

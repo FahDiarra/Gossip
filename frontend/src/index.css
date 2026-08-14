@@ -59,8 +59,8 @@
     --secondary-hover: #475569;
 
  /*Error*/
-  --error-text: #b54e46;
-  --error-text-bg: rgb(227 168 163 / 0.65);
+  --error-text: #df5044;
+  --error-text-bg: rgb(227 168 163 / 0.6);
   --error-text-border: #c88d89;
 
 /*Success*/
@@ -126,8 +126,8 @@
     --secondary: #94a3b8;
     --secondary-hover: #cbd5e1;
     /*Error*/
-    --error-text: #85130a;
-    --error-text-bg: rgb(227 168 163 / 0.68);
+    --error-text: #cd635b;
+    --error-text-bg: rgb(227 168 163 / 0.2);
     --error-text-border: #c88d89;
 
 

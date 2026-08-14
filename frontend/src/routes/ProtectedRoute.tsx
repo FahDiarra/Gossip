@@ -8,7 +8,7 @@ const ProtectedRoute = () => {
     if (!isAuthenticated) {
         return (
             <Navigate
-                to="/login"
+                to="/signin"
                 state={{ from: location }}
                 replace
             />

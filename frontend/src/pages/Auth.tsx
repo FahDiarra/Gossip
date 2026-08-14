@@ -14,7 +14,7 @@ import { Link,useNavigate } from "react-router-dom";
   import AuthVisual from "@/components/auth/AuthVisual";
 
 //context
-import { useAuth } from "@/context/AuthContext";
+import { useAuth  } from "@/context/AuthContext";
 
 type AuthMode = "logIn" | "register";
 
@@ -24,6 +24,7 @@ interface RegisterForm {
     //register
     name: string;
     userName:string ;
+    birthday:string;
     newEmail: string;
     newPassword: string;
     //Login
@@ -35,7 +36,7 @@ interface RegisterResponseProps {
     message: string;
     token: string;
     user: {
-        public_id: string;
+        publicId: string;
         name: string;
         userName: string;
         email: string;
@@ -46,7 +47,7 @@ interface LoginResponseProps {
     message: string;
     token: string;
     user: {
-        public_id: string;
+        publicId: string;
         name: string;
         userName: string;
         email: string;
@@ -72,6 +73,7 @@ export default function Auth(): React.JSX.Element {
     const [form, setForm] = useState<RegisterForm>({
         name: "",
         userName:"",
+        birthday:"",
         newEmail: "",
         newPassword: "",
 
@@ -95,6 +97,23 @@ export default function Auth(): React.JSX.Element {
             if (newValue.length > 0 && !newValue.startsWith("@")) {
                 newValue = `@${newValue}`;
             }
+        }
+
+        if (name === "birthday") {
+            const today = new Date();
+
+            const minBirthday = new Date(
+                today.getFullYear() - 10,
+                today.getMonth(),
+                today.getDate()
+            );
+
+            const selectedBirthday = new Date(value + "T00:00:00");
+
+            if (selectedBirthday > minBirthday) {
+                return;
+            }
+
         }
 
 
