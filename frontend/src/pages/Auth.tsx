@@ -124,15 +124,25 @@ export default function Auth(): React.JSX.Element {
         try {
 
           if (isSignup) {
-              const registerResponse = await apiPublic.post<RegisterResponseProps>(
-                "/auth/register",
-                form
-              );
+              const registerResponse =
+                  await apiPublic.post<RegisterResponseProps>(
+                      "/auth/register",
+                      {
+                          name: form.name,
+                          userName: form.userName,
+                          newEmail: form.newEmail,
+                          newPassword: form.newPassword,
+                      }
+                  );
                 const data = registerResponse.data;
 
                 if (data.success) {
                 login(data.token, data.user);
+                navigate("/profile", { replace: true });
                  }
+
+                console.log("message", data.message);
+
             return;
           }
 
@@ -146,13 +156,14 @@ export default function Auth(): React.JSX.Element {
             const data = loginResponse.data;
             if (data.success) {
                 login(data.token, data.user);
+                navigate("/profile", { replace: true });
             }
-
+            console.log("message", data.message);
 
         } catch (error) {
             console.error(error);
         } finally {
-            // setLoading(false);
+             setLoading(false);
         }
 
     };

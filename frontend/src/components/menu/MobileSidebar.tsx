@@ -13,8 +13,12 @@ import {
 } from "react-router-dom";
 
 import "@/styles/menu//MobileSidebar.css";
+import {useAuth} from "@/context/AuthContext.tsx";
 
 export default function MobileSidebar(){
+
+    const {isAuthenticated } = useAuth();
+
     const menu = [
         {
             icon:<Home size={24}/>,

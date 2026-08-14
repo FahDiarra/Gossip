@@ -11,6 +11,7 @@ import {
     Video,
     Info,
     UserPlus,
+    User,
     MessagesSquare,
     Heart,
     MessageCircle,
@@ -24,13 +25,21 @@ import { motion } from "framer-motion";
 
 import { useState } from "react";
 
+//Context
+import { useAuth } from "@/context/AuthContext";
+
+
 // import PostCard from "@/components/Post/PostCard";
 
 export default function Profile() {
 
     const [activeTab, setActiveTab] = useState("posts");
+    const { user } = useAuth();
 
-    const user = {
+
+
+
+    const userTest = {
         fullName: "John Smith",
         username: "@johnsmith",
         bio:
@@ -113,7 +122,10 @@ export default function Profile() {
 
             <section className="gp-profile-cover">
                 <div className="gp-profile-cover__wrapper">
-                  <img src={user.cover}  alt=""   />
+                  {/*<img src={userTest.cover} alt=""   />*/}
+                    <div className="gp-no-cover">
+
+                    </div>
                    <button className="gp-cover-edit">
                     <Camera size={18} />
                     <span>Change cover</span>
@@ -125,7 +137,9 @@ export default function Profile() {
 
             <section className="gp-profile-header">
                 <div className="gp-profile-avatar">
-                    <img src={user.avatar}   alt=""   />
+                    {/*<img src={userTest.avatar} alt=""   />*/}
+                    <User size={100} className="gp-profile-avatar__avatar" />
+
                     <button>
                         <Camera size={18} />
                     </button>
@@ -135,10 +149,10 @@ export default function Profile() {
                     <div className="gp-profile-top">
                         <div>
                             <h1>
-                                {user.fullName}
+                                {user?.name}
                             </h1>
                             <span>
-                                {user.username}
+                                {user?.userName}
                             </span>
                         </div>
 
@@ -169,17 +183,17 @@ export default function Profile() {
                     <div className="gp-profile-details">
                         <span>
                             <Briefcase size={16} />
-                            {user.work}
+                            {userTest.work}
                         </span>
 
                         <span>
                             <MapPin size={16} />
-                            {user.location}
+                            {userTest.location}
                         </span>
 
                         <span>
                             <Calendar size={16} />
-                            Joined {user.joined}
+                            Joined {userTest.joined}
                         </span>
 
                     </div>
@@ -187,21 +201,21 @@ export default function Profile() {
                     <div className="gp-profile-stats">
 
                         <div>
-                            <strong>{user.followers}</strong>
+                            <strong>{userTest.followers}</strong>
                             <span>Followers</span>
                         </div>
 
                         <div>
-                            <strong>{user.following}</strong>
+                            <strong>{userTest.following}</strong>
                             <span>Following</span>
                         </div>
                         <div>
-                          <strong>{user.posts}</strong>
+                          <strong>{userTest.posts}</strong>
                           <span>Posts</span>
 
                         </div>
                         <div>
-                            <strong>{user.Likes}</strong>
+                            <strong>{userTest.Likes}</strong>
                             <span>Likes</span>
                         </div>
 
@@ -271,12 +285,12 @@ export default function Profile() {
                                         <article className="gp-profile-post"  key={post.id}  >
                                            <div className="gp-post-header">
                                              <div className="gp-post-user">
-                                                <img  src={user.avatar} alt=""   />
+                                                <img src={userTest.avatar} alt=""   />
                                                 <div>
                                                     <strong>
-                                                        {user.fullName}
+                                                        {userTest.fullName}
                                                     </strong>
-                                                    <span>{user.username} </span>
+                                                    <span>{userTest.username} </span>
                                                 </div>
                                               </div>
 
@@ -404,20 +418,20 @@ export default function Profile() {
 
                         <div className="gp-card">
                             <h3>About</h3>
-                            <p>{user.bio}</p>
+                            <p>{userTest.bio}</p>
 
                             <br />
 
                             <p>
-                                📍 {user.location}
+                                📍 {userTest.location}
                             </p>
 
                             <p>
-                                💼 {user.work}
+                                💼 {userTest.work}
                             </p>
 
                             <p>
-                                🌐 {user.website}
+                                🌐 {userTest.website}
                             </p>
 
                         </div>
@@ -428,7 +442,7 @@ export default function Profile() {
                 <aside className="gp-profile-right">
                     <div className="gp-card">
                         <h3>Intro</h3>
-                        <p>{user.bio}</p>
+                        <p>{userTest.bio}</p>
                     </div>
 
                     <div className="gp-card">

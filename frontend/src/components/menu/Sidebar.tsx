@@ -23,14 +23,17 @@ import {
 } from "lucide-react";
 import "@/styles/menu/Sidebar.css";
 
-import exProfile from "@/images/profile.jpg"
+import exProfile from "@/assets/images/profile.jpg"
+
+//Context
+import {useAuth} from "@/context/AuthContext.tsx";
 
 export default function Sidebar() {
 
     const location = useLocation();
     const {t}=useTranslation();
-     const navigate = useNavigate();
-    
+    const navigate = useNavigate();
+    const {user,isAuthenticated} = useAuth();
 
 const {
     open,
@@ -100,13 +103,21 @@ const {
          </div>
         </nav>
 
+        {isAuthenticated ?(
         <div className="gp-sidebar-footer-profile">
         <Link to="/profile" className="gp-sidebar-footer-profile-link">
 
             <div className="gp-sidebar-footer-profile-info">
-                <div  className="gp-sidebar-footer-profile-photo">
+                {user?.ProfileImage ? (
+
+                 <div  className="gp-sidebar-footer-profile-photo">
                      <img src={exProfile} alt={t("sidebar.profile")} />
                  </div>
+
+                ):( <div className="gp-sidebar-footer-profile-icon">
+                    <User size={20} />
+                </div>)}
+
                 {open && (
                 <>
                 <div className="gp-sidebar-footer-profile-text">
@@ -125,18 +136,20 @@ const {
             )}
         </Link>
     </div>
-
+        ):(
      <div className="gp-sidebar-footer-profile">
         <Link to="/signin" className="gp-sidebar-footer-profile-link">
             <div className="gp-sidebar-footer-profile-info">
+
                 <div className="gp-sidebar-footer-profile-icon">
                     <User size={20} />
                 </div>
+
                 {open && (
                 <>
                 <div className="gp-sidebar-footer-profile-text">
                     <span className="gp-sidebar-footer-profile-title">
-                       {t("sidebar.join")} {appConfig.title}
+                       {t("sidebar.join")}
                     </span>
                     <small>
                            {t("sidebar.join_label")}
@@ -150,6 +163,8 @@ const {
             )}
         </Link>
     </div>
+        )}
+
 
     </aside>
 

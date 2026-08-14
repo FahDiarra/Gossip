@@ -48,7 +48,7 @@ const [showPassword, setShowPassword ] = useState<boolean>(false);
 const [passwordConfirm, setPasswordConfirm] = useState<string>("");
 const [passwordFocused, setPasswordFocused] = useState<boolean>(false);
 const [userNameFocused, setUserNameFocused] = useState<boolean>(false);
-const [userNameValid, setUserNameValid] = useState<boolean>(false);
+const [userNameValid, setUserNameValid] = useState<boolean>(true);
 const [userNameSuggestion, setUserNameSuggestion] = useState<string[]>(["@john123", "@john_dev", "@john2026"]);
 const [nameFocused, setNameFocused] = useState<boolean>(false);
 
@@ -106,7 +106,7 @@ const addSuggestion = (suggestion:string): void => {
 
 }
 
-const disabled:boolean = loading || !userNameValid || !passwordsMatch || name !=="" || newEmail !=="";
+const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==="" || newEmail ==="";
 
 
     return (<>
