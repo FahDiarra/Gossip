@@ -100,8 +100,9 @@ export default function Sidebar() {
         </nav>
 
         {isAuthenticated ?(
-        <div className="gp-sidebar-footer-profile">
-        <Link to="/profile" className="gp-sidebar-footer-profile-link">
+            <div className="gp-sidebar-footer-profile">
+
+        <button onClick={()=>void navigate("profile")} className="gp-sidebar-footer-profile-link">
 
             <div className="gp-sidebar-footer-profile-info">
                 {user?.profileImage ? (
@@ -130,11 +131,11 @@ export default function Sidebar() {
             {open && (
                 <ChevronRight  className="gp-sidebar-footer-profile-arrow" size={22} />
             )}
-        </Link>
+        </button>
     </div>
-        ):(
+       ):(
      <div className="gp-sidebar-footer-profile">
-        <Link to="/signin" className="gp-sidebar-footer-profile-link">
+        <button onClick={()=>void navigate("signin")}  className="gp-sidebar-footer-profile-link">
             <div className="gp-sidebar-footer-profile-info">
 
                 <div className="gp-sidebar-footer-profile-icon">
@@ -157,7 +158,7 @@ export default function Sidebar() {
             {open && (
                 <ChevronRight  className="gp-sidebar-footer-profile-arrow" size={22} />
             )}
-        </Link>
+        </button>
     </div>
         )}
 

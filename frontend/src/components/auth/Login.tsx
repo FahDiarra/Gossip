@@ -13,8 +13,7 @@ import {useNavigate} from "react-router-dom";
 interface LoginProps {
     email: string;
     password: string;
-    errorEmail:boolean;
-    errorPassword: boolean;
+    errorLogin:boolean;
     handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     loading: boolean;
 }
@@ -22,14 +21,13 @@ interface LoginProps {
 export default function Login({
                                    email,
                                    password,
-                                   errorEmail,
-                                   errorPassword,
+                                   errorLogin,
                                    handleChange,
                                    loading,
                                }: LoginProps): React.JSX.Element {
 
     const [showPassword, setShowPassword] = useState( false );
-    const error:boolean = errorEmail || errorPassword;
+
     const navigate = useNavigate();
     const handleForgotPassword = (): void => {
         navigate("/forgot-password");
@@ -44,7 +42,7 @@ export default function Login({
             <label htmlFor="email">Email:</label>
             <div className="gossip-input">
                 <Mail size={19}/>
-                <input id="email" type="email" name="email"  placeholder="you@example.com"
+                <input id="email" type="email" name="email"  placeholder="Eg: you@example.com"
                        value={email}
                        onChange={handleChange}
                        autoComplete="email" required />
@@ -84,18 +82,15 @@ export default function Login({
         </div>
     </div>
 
-          {error && (
+          {errorLogin && (
              <div className="errorInput">
                  <small>
-                     {!errorEmail && "Account not found. Please check your email address and try again."}
-                     {!errorPassword && "Incorrect password"}
+                     Invalid email or password.
                  </small>
-
              </div>
-
           )}
 
-          {errorPassword &&(
+          {errorLogin &&(
               <div className="gossip-forgot-password">
               <button type="button"
                       onClick={handleForgotPassword}

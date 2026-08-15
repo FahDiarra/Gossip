@@ -18,7 +18,7 @@ import { useAuth  } from "@/context/AuthContext";
 
 type AuthMode = "logIn" | "register";
 
-import { type FormEvent, useState } from "react";
+import {  useState  } from "react";
 
 interface RegisterForm {
     //register
@@ -66,8 +66,7 @@ export default function Auth(): React.JSX.Element {
     const [loading, setLoading] = useState<boolean>(false);
 
     //Login
-    const [errorPassword, setErrorPassword] = useState<boolean>(true);
-    const [errorEmail, setErrorEmail] = useState<boolean>(false);
+    const [errorLogin, setErrorLogin] = useState<boolean>(false);
 
     //Register & Login
     const [form, setForm] = useState<RegisterForm>({
@@ -122,13 +121,7 @@ export default function Auth(): React.JSX.Element {
             [name]: newValue,
         }));
 
-        if (name === "email") {
-            setErrorEmail(false);
-        }
 
-        if (name === "password") {
-            setErrorPassword(false);
-        }
     };
 
 
@@ -176,8 +169,12 @@ export default function Auth(): React.JSX.Element {
             if (data.success) {
                 login(data.token, data.user);
                 navigate("/profile", { replace: true });
+            }else if(data.message ==="error_credentials"){
+                setErrorLogin(true);
             }
+
             console.log("message", data.message);
+
 
         } catch (error) {
             console.error(error);
@@ -258,8 +255,7 @@ export default function Auth(): React.JSX.Element {
                             <Login
                                 email={form.email}
                                 password={form.password}
-                                errorEmail={errorEmail}
-                                errorPassword={errorPassword}
+                                errorLogin={errorLogin}
                                 loading={loading}
                                 handleChange={handleChange}
                             />
@@ -267,6 +263,7 @@ export default function Auth(): React.JSX.Element {
                             <Register
                             name={form.name}
                             userName={form.userName}
+                            birthday={form.birthday}
                             newEmail={form.newEmail}
                             newPassword={form.newPassword}
                             handleChange={handleChange}

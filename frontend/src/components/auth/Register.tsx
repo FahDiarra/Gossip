@@ -7,9 +7,12 @@ import {
     Mail,
     Lock,
     ArrowRight,
+    CircleCheck,
+    CircleX,
 } from "lucide-react";
 
 import {useState,useMemo} from "react";
+import apiPublic from "@/api/api.public.ts";
 
 interface RegisterForm {
     // Register
@@ -27,11 +30,17 @@ interface RegisterProps {
     name: string;
     userName: string;
     newEmail: string;
+    birthday: string;
     newPassword: string;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     loading: boolean;
     setForm: React.Dispatch<React.SetStateAction<RegisterForm>>;
 }
+interface UsernameSuggestionsResponse {
+    exists: boolean;
+    suggestions: string[];
+}
+
 
 
 
@@ -49,10 +58,17 @@ export default function  Register({
 const [showPassword, setShowPassword ] = useState<boolean>(false);
 const [passwordConfirm, setPasswordConfirm] = useState<string>("");
 const [passwordFocused, setPasswordFocused] = useState<boolean>(false);
+
 const [userNameFocused, setUserNameFocused] = useState<boolean>(false);
-const [userNameValid, setUserNameValid] = useState<boolean>(true);
-const [userNameSuggestion, setUserNameSuggestion] = useState<string[]>(["@john123", "@john_dev", "@john2026"]);
+const [userNameValid, setUserNameValid] = useState<boolean| null>(null);
+const [userNameSuggestion, setUserNameSuggestion] = useState<string[]>([]);
+const [userNameLengthError, setUserNameLengthError] = useState<boolean>(false);
+const [suggestionsLoading, setSuggestionsLoading] = useState<boolean>(false);
+
+
 const [nameFocused, setNameFocused] = useState<boolean>(false);
+const [checkEmailLoading, setCheckEmailLoading] = useState<boolean>(false);
+const [emailValid, setEmailValid] = useState<boolean | null>(null);
 const [birthdayFocused , setBirthdayFocused] = useState<boolean>(false);
 
     const passwordValid:boolean =
@@ -89,7 +105,62 @@ const [birthdayFocused , setBirthdayFocused] = useState<boolean>(false);
 
     const onBlurUsername = (): void => {
         setUserNameFocused(false);
-    }
+          if(userName ===""){
+              return;
+          }
+        if (userName.length < 4  ) {
+            setUserNameLengthError(true)
+            return;
+        }
+        setUserNameLengthError(false);
+
+
+        if (
+            userNameSuggestion.length > 0 &&
+            userNameSuggestion.includes(userName)
+        ) {
+            return;
+        }
+        handleUsernameBlur();
+    };
+
+
+
+
+    const handleUsernameBlur = async (): Promise<void> => {
+        setSuggestionsLoading(true);
+        try {
+
+            const response =
+                await apiPublic.get<UsernameSuggestionsResponse>(
+                    "/auth/username-suggestions",
+                    {
+                        params: {
+                            userName
+                        }
+                    }
+                );
+
+            const data = response.data;
+
+            if (data.exists){
+                setUserNameValid(false);
+                setUserNameSuggestion(data.suggestions);
+            } else {
+                setUserNameValid(true);
+                setUserNameSuggestion([]);
+            }
+
+
+        } catch (error) {
+            console.error(
+                "Username verification failed:",
+                error
+            );
+        }finally{
+            setSuggestionsLoading(false);
+        }
+    };
 
 
 
@@ -105,8 +176,45 @@ const addSuggestion = (suggestion:string): void => {
         ...prev,
         [fieldName]: newValue,
     }))
-
 }
+
+
+const emailOnBlur = (): void => {
+     if(newEmail ===""){
+         return ;
+     }
+    handleEmailBlur();
+}
+
+    const handleEmailBlur = async (): Promise<void> => {
+
+        setCheckEmailLoading(true);
+
+        try {
+
+            const response = await apiPublic.get<boolean>(
+                "/auth/check-email",
+                {
+                    params: {
+                        email :newEmail,
+                    }
+                }
+            );
+
+            if (response.data) {
+                setEmailValid(true);
+
+            } else {
+                setEmailValid(false);
+            }
+
+        } catch (error) {
+            console.error("Email verification failed:", error);
+        }finally{
+            setCheckEmailLoading(false);
+        }
+    };
+
 
 const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==="" || newEmail ==="";
 
@@ -141,18 +249,30 @@ const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==
                 <input id="userName" name="userName" type="text" placeholder="Eg: @username"
                      value={userName}
                      onChange={handleChange}
-                     maxLength={30}
+                     maxLength={31}
                      required
                      onFocus={():void => setUserNameFocused(true)}
                      onBlur={onBlurUsername}/>
+
+
+                   {suggestionsLoading ?(
+                    <span className="gossip-input-spinner"></span>
+                   ):userNameValid === true ?(
+                     <CircleCheck size="18" className="gp-input-valid" strokeWidth={2}/>
+                    ):userNameValid === false ?(
+                     <CircleX size="18" className="gp-input-invalid" strokeWidth={2}/>
+                     ):null}
+
+
             </div>
 
-            {!userNameValid && (
-            <div className="errorInput">
-                <small>Error</small>
-            </div>
+
+
+             {userNameLengthError && (
+              <div className="errorInput">
+                  <small>Username must be between 3–30 characters.</small>
+              </div>
              )}
-
 
                 {userNameFocused &&(<>
                 <div className="instructionInput">
@@ -161,11 +281,10 @@ const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==
                 </div>
                 </>)}
 
-                {!userNameValid && (<>
+                {userNameValid === false && (<>
                   <div className="instructionInput">
                     <small>Suggestions:</small>
                     <ul>
-
                         {userNameSuggestion.map((suggestion, index) =>{
                             const suggestionActive :boolean =userName === suggestion;
                             return(
@@ -223,13 +342,24 @@ const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==
                     value={newEmail}
                     maxLength={254}
                     onChange={handleChange}
-                    autoComplete="email" required/>
+                    autoComplete="email"
+                    onBlur={emailOnBlur}
+                       required/>
+
+                 {checkEmailLoading?(
+                    <span className="gossip-input-spinner"></span>
+                  ):emailValid === true ?(
+                    <CircleCheck size="18" className="gp-input-valid" strokeWidth={2}/>
+                  ):emailValid === false ?(
+                    <CircleX size="18" className="gp-input-invalid" strokeWidth={2}/>
+                  ):null}
             </div>
 
+            {emailValid === false && (
             <div className="errorInput">
-               <small>Error</small>
+               <small>This Email is already in use</small>
              </div>
-
+            )}
         </div>
 
 

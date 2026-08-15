@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.gossip.backend.dto.UserNameSuggestionsResponse;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -49,13 +51,37 @@ public class AuthController {
         AuthResponse response =
                 authService.login(request);
 
-        if (!response.success()) {
-
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body(response);
-        }
+//        if (!response.success()) {
+//
+//            return ResponseEntity
+//                    .status(HttpStatus.UNAUTHORIZED)
+//                    .body(response);
+//        }
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/username-suggestions")
+    public ResponseEntity<UserNameSuggestionsResponse> userNameSuggestions(
+            @RequestParam String username
+    ) {
+
+        UserNameSuggestionsResponse response =
+                authService.getUserNameSuggestions(username);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/check-email")
+    public ResponseEntity<Boolean> checkEmail(
+            @RequestParam String email
+    ) {
+
+        boolean exists =
+                authService.emailExists(email);
+
+        return ResponseEntity.ok(exists);
+    }
+
+
 }

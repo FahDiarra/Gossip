@@ -20,6 +20,7 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 38px 48px;
+    overflow: hidden;
 }
 
 
@@ -353,7 +354,7 @@
     display: flex;
     justify-content: center;
     color: var(--error-text);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     background: var(--error-text-bg);
     border: 1px solid var(--error-text-border);
@@ -393,6 +394,13 @@
 Instruction
 ===========================*/
 
+
+.gp-input-valid{
+    color: #22c55e !important ;
+}
+.gp-input-invalid {
+    color: var(--error-text) !important;
+}
 
 .instructionInput {
     margin-top: 8px;
@@ -480,7 +488,6 @@ Instruction
 
 
 
-
 /* =========================================
    SUBMIT
 ========================================= */
@@ -525,14 +532,28 @@ Instruction
     transform: translateY(0);
 }
 
-.gossip-submit-spinner {
+
+
+/*=========================================
+  SPINNER
+================================*/
+.gossip-submit-spinner,.gossip-input-spinner {
     width: 18px;
     height: 18px;
-    border: 2px solid rgba(255, 255, 255, 0.35);
-    border-top-color: #ffffff;
     border-radius: 50%;
     animation: gossip-spin 0.7s linear infinite;
 }
+
+.gossip-submit-spinner{
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #ffffff;
+}
+
+.gossip-input-spinner{
+    border: 2px solid  #22c55e;
+    border-top-color: #2e472e;
+}
+
 
 @keyframes gossip-spin {
     to {

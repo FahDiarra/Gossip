@@ -7,10 +7,17 @@ import com.gossip.backend.entity.User;
 import com.gossip.backend.repository.UserRepository;
 import com.gossip.backend.security.JwtService;
 
+
+import com.gossip.backend.dto.UserNameSuggestionsResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 @Service
 @RequiredArgsConstructor
@@ -20,10 +27,20 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
+    private String normalizeUsername(String userName) {
+
+        userName = userName
+                .trim()
+                .replaceAll("[^a-zA-Z0-9]", "");
+
+        return "@" + userName;
+    }
+
+
     public AuthResponse register(RegisterRequest request) {
 
         String name = request.getName().trim();
-        String userName = request.getUserName().trim();
+        String userName = normalizeUsername(request.getUserName());
         String email = request.getNewEmail().trim().toLowerCase();
 
         if (userRepository.existsByEmail(email)) {
@@ -88,7 +105,7 @@ public class AuthService {
 
             return new AuthResponse(
                     false,
-                    "Invalid email or password",
+                    "error_credentials",
                     null,
                     null
             );
@@ -104,7 +121,7 @@ public class AuthService {
 
             return new AuthResponse(
                     false,
-                    "Invalid email or password",
+                    "error_credentials",
                     null,
                     null
             );
@@ -122,4 +139,61 @@ public class AuthService {
                 new AuthResponse.UserResponse(user)
         );
     }
+
+
+
+    public UserNameSuggestionsResponse getUserNameSuggestions(
+            String userName
+    ) {
+
+         userName = normalizeUsername(userName);
+
+        boolean exists =
+                userRepository.existsByUserName(userName);
+
+        List<String> suggestions = new ArrayList<>();
+
+        if (!exists) {
+            return new UserNameSuggestionsResponse(
+                    false,
+                    suggestions
+            );
+        }
+
+        int attempts = 0;
+
+        while (suggestions.size() < 3 && attempts < 50) {
+
+            attempts++;
+
+            int randomNumber =
+                    ThreadLocalRandom.current()
+                            .nextInt(100, 10000);
+
+            String suggestion =
+                    userName+ randomNumber;
+
+            if (!userRepository.existsByUserName(suggestion)
+                    && !suggestions.contains(suggestion)) {
+
+                suggestions.add(suggestion);
+            }
+        }
+
+        return new UserNameSuggestionsResponse(
+                true,
+                suggestions
+        );
+    }
+
+
+    public boolean emailExists(String email) {
+
+        email = email.trim().toLowerCase();
+
+        return userRepository.existsByEmail(email);
+    }
+
+
+
 }

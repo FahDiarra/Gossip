@@ -1,5 +1,3 @@
-
-
 import {
     Home,
     Search,
@@ -8,76 +6,109 @@ import {
     User
 } from "lucide-react";
 
-import {
-    NavLink
-} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-import "@/styles/menu//MobileSidebar.css";
-import {useAuth} from "@/context/AuthContext.tsx";
+import "@/styles/menu/MobileSidebar.css";
 
-export default function MobileSidebar(){
+export default function MobileSidebar() {
 
-    const {isAuthenticated } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const menu = [
         {
-            icon:<Home size={24}/>,
-            label:"Home",
-            path:"/"
+            icon: <Home size={23} />,
+            label: "Home",
+            path: "/"
         },
-
         {
-            icon:<Search size={24}/>,
-            label:"Explore",
-            path:"/explore"
-        },
+            icon: <Search size={23} />,
+            label: "Explore",
+            path: "/explore"
+        }
+    ];
 
+
+    const rightMenu = [
+        {
+            icon: <Heart size={23} />,
+            label: "Likes",
+            path: "/notifications"
+        },
+        {
+            icon: <User size={23} />,
+            label: "Profile",
+            path: "/profile"
+        }
     ];
 
     return (
-
         <nav className="gp-mobile-bottom">
-            <div className="gp-mobile-links">
-                {
-                    menu.map(item=>(
 
-                        <NavLink
+            {/* LEFT */}
+            <div className="gp-mobile-links-container">
+
+                {menu.map((item) => {
+
+                    const isActive = location.pathname === item.path;
+
+                    return (
+                        <button
                             key={item.path}
-                            to={item.path}
-                             className={({isActive})=> isActive
-                                ? "active"
-                                : ""  }  >
+                            type="button"
+                            className={`gp-mobile-link ${
+                                isActive ? "active" : ""
+                            }`}
+                            onClick={() => navigate(item.path)}
+                        >
                             {item.icon}
+
                             <span>
                                 {item.label}
                             </span>
-                        </NavLink>
-                    ))
-                  }
+                        </button>
+                    );
+                })}
+
             </div>
 
-            <button className="gp-mobile-create"      >
-                <Plus size={32}/>
+
+            {/* CREATE */}
+            <button
+                type="button"
+                className="gp-mobile-create"
+                onClick={() => navigate("/create")}
+            >
+                <Plus size={30} strokeWidth={2.5} />
             </button>
 
-            <div className="gp-mobile-links right">
 
-                <NavLink  to="/notifications"   >
-                    <Heart size={24}/>
-                    <span>
-                        Likes
-                    </span>
-                </NavLink>
+            {/* RIGHT */}
+            <div className="gp-mobile-links-container">
+                {rightMenu.map((item) => {
 
-                <NavLink to="/profile"  >
-                    <User size={24}/>
-                    <span>
-                        Profile
-                    </span>
-                </NavLink>
+                    const isActive = location.pathname === item.path;
+
+                    return (
+                        <button
+                            key={item.path}
+                            type="button"
+                            className={`gp-mobile-link ${
+                                isActive ? "active" : ""
+                            }`}
+                            onClick={() => navigate(item.path)}
+                        >
+                            {item.icon}
+
+                            <span>
+                                {item.label}
+                            </span>
+                        </button>
+                    );
+                })}
+
             </div>
+
         </nav>
-
     );
-
 }

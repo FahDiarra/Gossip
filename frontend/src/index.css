@@ -159,6 +159,8 @@ body,
     padding: 0;
 }
 
-
+body {
+  -webkit-tap-highlight-color: transparent;
+}
 
 
