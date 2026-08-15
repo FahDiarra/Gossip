@@ -10,19 +10,33 @@ import { useState } from "react";
 import {useNavigate} from "react-router-dom";
 
 
+interface RegisterForm {
+    // Register
+    name: string;
+    userName: string;
+    birthday: string;
+    newEmail: string;
+    newPassword: string;
+
+    // Login
+    email: string;
+    password: string;
+}
+
+
 interface LoginProps {
     email: string;
     password: string;
     errorLogin:boolean;
-    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     loading: boolean;
+    setForm:React.Dispatch<React.SetStateAction<RegisterForm>>;
 }
 
 export default function Login({
                                    email,
                                    password,
                                    errorLogin,
-                                   handleChange,
+                                   setForm,
                                    loading,
                                }: LoginProps): React.JSX.Element {
 
@@ -31,6 +45,17 @@ export default function Login({
     const navigate = useNavigate();
     const handleForgotPassword = (): void => {
         navigate("/forgot-password");
+    };
+
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setForm((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+
+
     };
 
 

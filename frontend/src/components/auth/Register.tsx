@@ -32,7 +32,6 @@ interface RegisterProps {
     newEmail: string;
     birthday: string;
     newPassword: string;
-    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     loading: boolean;
     setForm: React.Dispatch<React.SetStateAction<RegisterForm>>;
 }
@@ -41,7 +40,10 @@ interface UsernameSuggestionsResponse {
     suggestions: string[];
 }
 
-
+interface oldValuesProps{
+    oldUserName: string;
+    oldEmail: string;
+}
 
 
 export default function  Register({
@@ -50,7 +52,6 @@ export default function  Register({
      birthday,
      newEmail,
      newPassword,
-     handleChange,
      loading,
      setForm,
        }:RegisterProps ): React.JSX.Element {
@@ -69,7 +70,16 @@ const [suggestionsLoading, setSuggestionsLoading] = useState<boolean>(false);
 const [nameFocused, setNameFocused] = useState<boolean>(false);
 const [checkEmailLoading, setCheckEmailLoading] = useState<boolean>(false);
 const [emailValid, setEmailValid] = useState<boolean | null>(null);
+const [emailerrorFormat, setEmailErrorFormat] = useState<boolean>(false);
+
 const [birthdayFocused , setBirthdayFocused] = useState<boolean>(false);
+
+const [oldValues, setOldValues] = useState<oldValuesProps>({
+    oldUserName:"",
+    oldEmail:"",
+});
+
+    const emailRegex = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
 
     const passwordValid:boolean =
         newPassword.length >= 8 &&
@@ -103,17 +113,17 @@ const [birthdayFocused , setBirthdayFocused] = useState<boolean>(false);
         }
     };
 
+
     const onBlurUsername = (): void => {
-        setUserNameFocused(false);
-          if(userName ===""){
-              return;
-          }
-        if (userName.length < 4  ) {
+          setUserNameFocused(false);
+          if(userName ===""){return; }
+
+
+          if (userName.length < 4  ) {
             setUserNameLengthError(true)
             return;
-        }
-        setUserNameLengthError(false);
-
+           }
+           setUserNameLengthError(false);
 
         if (
             userNameSuggestion.length > 0 &&
@@ -121,23 +131,26 @@ const [birthdayFocused , setBirthdayFocused] = useState<boolean>(false);
         ) {
             return;
         }
+
         handleUsernameBlur();
     };
 
 
 
-
     const handleUsernameBlur = async (): Promise<void> => {
         setSuggestionsLoading(true);
+
+        setOldValues((prev)=>({
+            ...prev,
+            oldUserName:userName,}))
+
         try {
 
             const response =
                 await apiPublic.get<UsernameSuggestionsResponse>(
                     "/auth/username-suggestions",
                     {
-                        params: {
-                            userName
-                        }
+                        params: {userName}
                     }
                 );
 
@@ -151,12 +164,8 @@ const [birthdayFocused , setBirthdayFocused] = useState<boolean>(false);
                 setUserNameSuggestion([]);
             }
 
-
         } catch (error) {
-            console.error(
-                "Username verification failed:",
-                error
-            );
+            console.error("Username verification failed:", error);
         }finally{
             setSuggestionsLoading(false);
         }
@@ -176,19 +185,29 @@ const addSuggestion = (suggestion:string): void => {
         ...prev,
         [fieldName]: newValue,
     }))
+    setUserNameValid(true);
 }
 
 
 const emailOnBlur = (): void => {
-     if(newEmail ===""){
+     if(newEmail ==="" || oldValues.oldEmail == newEmail){
          return ;
      }
+
+    if (!emailRegex.test(newEmail)) {
+        setEmailErrorFormat(true);
+        return;
+    }
     handleEmailBlur();
 }
 
-    const handleEmailBlur = async (): Promise<void> => {
 
+    const handleEmailBlur = async (): Promise<void> => {
         setCheckEmailLoading(true);
+
+        setOldValues((prev)=>({
+            ...prev,
+            oldEmail:newEmail,}))
 
         try {
 
@@ -202,10 +221,10 @@ const emailOnBlur = (): void => {
             );
 
             if (response.data) {
-                setEmailValid(true);
 
-            } else {
                 setEmailValid(false);
+            } else {
+                setEmailValid(true);
             }
 
         } catch (error) {
@@ -216,7 +235,65 @@ const emailOnBlur = (): void => {
     };
 
 
-const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==="" || newEmail ==="";
+    const handleChangeInputRegister = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        let newValue = value;
+        if (name === "userName") {
+            newValue = value
+                .replace(/[^a-zA-Z0-9_@]/g, "")
+                .replace(/(?!^)@/g, "");
+
+            if (newValue.length > 0 && !newValue.startsWith("@")) {
+                newValue = `@${newValue}`;
+            }
+            if(newValue.length >= 4){
+                setUserNameLengthError(false);
+            }
+
+
+
+        }
+            if(name === "newEmail") {
+
+                if(newValue !== oldValues.oldEmail ){
+                    setEmailValid(null);
+                }
+                if (emailRegex.test(newValue)) {
+                    setEmailErrorFormat(false);
+
+                  }
+
+            }
+
+          if (name === "birthday") {
+            const today = new Date();
+
+            const minBirthday = new Date(
+                today.getFullYear() - 10,
+                today.getMonth(),
+                today.getDate()
+            );
+
+            const selectedBirthday = new Date(value + "T00:00:00");
+
+            if (selectedBirthday > minBirthday) {
+                return;
+            }
+
+        }
+
+        setForm((prev) => ({
+            ...prev,
+            [name]: newValue,
+        }));
+
+
+
+    };
+
+
+
+    const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==="" || newEmail ==="";
 
 
     return (<>
@@ -226,7 +303,7 @@ const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==
             <div className="gossip-input">
                 <input id="name" name="name" type="text" placeholder="Your name"
                     value={name}
-                    onChange={handleChange}
+                    onChange={handleChangeInputRegister}
                        maxLength={50}
                        autoComplete= "off"  required
                        onFocus={():void => setNameFocused(true)}
@@ -248,7 +325,7 @@ const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==
             <div className="gossip-input">
                 <input id="userName" name="userName" type="text" placeholder="Eg: @username"
                      value={userName}
-                     onChange={handleChange}
+                     onChange={handleChangeInputRegister}
                      maxLength={31}
                      required
                      onFocus={():void => setUserNameFocused(true)}
@@ -282,6 +359,11 @@ const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==
                 </>)}
 
                 {userNameValid === false && (<>
+
+                    <div className="errorInput">
+                        <small>This username is already in use</small>
+                    </div>
+
                   <div className="instructionInput">
                     <small>Suggestions:</small>
                     <ul>
@@ -310,7 +392,7 @@ const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==
                         name="birthday"
                         type="date"
                         value={birthday}
-                        onChange={handleChange}
+                        onChange={handleChangeInputRegister}
                         onFocus={() => setBirthdayFocused(true)}
                         onBlur={() => setBirthdayFocused(false)}
                         max={new Date(
@@ -341,7 +423,7 @@ const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==
                 <input id="newEmail" type="email" name="newEmail" placeholder="you@example.com"
                     value={newEmail}
                     maxLength={254}
-                    onChange={handleChange}
+                    onChange={handleChangeInputRegister}
                     autoComplete="email"
                     onBlur={emailOnBlur}
                        required/>
@@ -355,11 +437,20 @@ const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==
                   ):null}
             </div>
 
+            {emailerrorFormat &&(
+                <div className="errorInput">
+                    <small>Please enter a valid email address.</small>
+                </div>
+            )}
+
             {emailValid === false && (
             <div className="errorInput">
                <small>This Email is already in use</small>
              </div>
+
             )}
+            
+
         </div>
 
 
@@ -380,7 +471,7 @@ const disabled:boolean = loading || !userNameValid || !passwordsMatch || name ==
                     placeholder="Enter your password"
                     value={newPassword}
                     maxLength={64}
-                    onChange={handleChange}
+                    onChange={handleChangeInputRegister}
                     autoComplete="new-password" required
                        onFocus={() => setPasswordFocused(true)}
                        onBlur={onBlurPassword}

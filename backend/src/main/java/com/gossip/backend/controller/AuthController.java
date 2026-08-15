@@ -63,11 +63,11 @@ public class AuthController {
 
     @GetMapping("/username-suggestions")
     public ResponseEntity<UserNameSuggestionsResponse> userNameSuggestions(
-            @RequestParam String username
+            @RequestParam String userName
     ) {
 
         UserNameSuggestionsResponse response =
-                authService.getUserNameSuggestions(username);
+                authService.getUserNameSuggestions(userName);
 
         return ResponseEntity.ok(response);
     }

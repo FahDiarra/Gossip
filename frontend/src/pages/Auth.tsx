@@ -18,7 +18,7 @@ import { useAuth  } from "@/context/AuthContext";
 
 type AuthMode = "logIn" | "register";
 
-import {  useState  } from "react";
+import {  useState, FormEvent } from "react";
 
 interface RegisterForm {
     //register
@@ -70,59 +70,19 @@ export default function Auth(): React.JSX.Element {
 
     //Register & Login
     const [form, setForm] = useState<RegisterForm>({
+        //register
         name: "",
         userName:"",
         birthday:"",
         newEmail: "",
         newPassword: "",
-
+         //Login
         email: "",
         password: "",
     })
 
 
     const isSignup = mode === "register";
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-
-        let newValue = value;
-
-        if (name === "userName") {
-            newValue = value
-                .replace(/[^a-zA-Z0-9_@]/g, "")
-                .replace(/(?!^)@/g, "");
-
-            if (newValue.length > 0 && !newValue.startsWith("@")) {
-                newValue = `@${newValue}`;
-            }
-        }
-
-        if (name === "birthday") {
-            const today = new Date();
-
-            const minBirthday = new Date(
-                today.getFullYear() - 10,
-                today.getMonth(),
-                today.getDate()
-            );
-
-            const selectedBirthday = new Date(value + "T00:00:00");
-
-            if (selectedBirthday > minBirthday) {
-                return;
-            }
-
-        }
-
-
-        setForm((prev) => ({
-            ...prev,
-            [name]: newValue,
-        }));
-
-
-    };
 
 
 
@@ -257,7 +217,7 @@ export default function Auth(): React.JSX.Element {
                                 password={form.password}
                                 errorLogin={errorLogin}
                                 loading={loading}
-                                handleChange={handleChange}
+                                setForm={setForm}
                             />
                          ):(
                             <Register
@@ -266,7 +226,6 @@ export default function Auth(): React.JSX.Element {
                             birthday={form.birthday}
                             newEmail={form.newEmail}
                             newPassword={form.newPassword}
-                            handleChange={handleChange}
                             loading={loading}
                             setForm={setForm}
 
