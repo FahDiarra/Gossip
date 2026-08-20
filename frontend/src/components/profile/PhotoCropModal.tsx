@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Cropper, { type Area } from "react-easy-crop";
-
+import "@/styles/profile/PhotoCropModal.css"
 interface PhotoCropModalProps {
     isOpen: boolean;
     imageSrc: string | null;
@@ -51,9 +51,7 @@ export default function PhotoCropModal({
         return new Promise((resolve, reject) => {
 
             const image = new window.Image();
-
             image.src = imageSrc;
-
             image.onload = () => {
 
                 const canvas = document.createElement("canvas");
@@ -146,7 +144,8 @@ export default function PhotoCropModal({
     return (
         <div className="gp-photo-modal-overlay">
 
-            <div className="gp-photo-modal">
+            <div  className={
+                cropShape === "round"? "gp-photo-modal-small" :"gp-photo-modal-large"}>
 
                 <div className="gp-photo-modal__header">
 
@@ -163,14 +162,12 @@ export default function PhotoCropModal({
                 </div>
 
                 <div className="gp-photo-modal__body">
-
                     <div
                         className={
                             cropShape === "round"
                                 ? "gp-photo-modal__crop gp-photo-modal__crop--round"
                                 : "gp-photo-modal__crop gp-photo-modal__crop--cover"
-                              }
-                        >
+                              }  >
 
                         <Cropper
                             image={imageSrc}

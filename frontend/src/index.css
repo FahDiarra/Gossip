@@ -42,8 +42,8 @@
   --sidebar-item-active-bg:#e5e7eb;
 
   /* Main btn */
-  --main-btn-bg:  #eef2f7;
-  --main-btn-bg-hover: rgb(155 152 156 / 0.78);
+  --main-btn-bg: #f8fafc;
+  --main-btn-bg-hover: rgba(128, 128, 128, 0.15);
   --main-btn-text-color: #1f2937;
   --main-btn-text-hover: #111827;
   --main-btn-border-color: rgb(155 152 156);
@@ -74,6 +74,9 @@
   --warning-text-bg: #ffc600;
   --warning-text-border: #ffc600;
 
+  /*Skeleton*/
+  --skeleton-base: #e5e7eb;
+  --skeleton-highlight: #f3f4f6;
 
 }
 
@@ -131,8 +134,9 @@
     --error-text-border: #c88d89;
 
 
-
-
+    /*Skeleton*/
+    --skeleton-base: #20232d;
+    --skeleton-highlight: #2c303b;
 
       color-scheme: dark;
   

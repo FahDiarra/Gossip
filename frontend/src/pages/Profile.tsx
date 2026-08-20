@@ -32,6 +32,7 @@ import apiPrivate from "@/api/api.private.ts";
 import appConfig from "@/config/appConfig.ts";
 import * as React from "react";
 import PhotoCropModal from "@/components/profile/PhotoCropModal.tsx";
+import SkeletonImage from "@/components/ui/SkeletonImage.tsx";
 // import PostCard from "@/components/Post/PostCard";
 
 
@@ -257,7 +258,10 @@ export function Profile() {
                 <section className="gp-profile-cover">
                     <div className="gp-profile-cover__wrapper">
                         {displayUser?.coverPhoto? (
-                            <img src={`${appConfig.apiBaseUrl}${displayUser.coverPhoto}`} alt="Cover"/>
+                            <SkeletonImage
+                                src={`${appConfig.apiBaseUrl}${displayUser.coverPhoto}`}
+                                alt="Cover"
+                                className="gp-profile-cover-img" />
                         ) : (
                             <div className="gp-profile-no-cover"></div>
                         )}
@@ -273,7 +277,7 @@ export function Profile() {
                             <span>Change cover</span>
                         </button>
 
-                        <input id="cover-photo-input"type="file" accept="image/jpeg,image/png,image/webp" hidden
+                        <input id="cover-photo-input" type="file" accept="image/jpeg,image/png,image/webp" hidden
                             onChange={handleSelectCover} />
                     </div>
                 </section>
@@ -284,7 +288,10 @@ export function Profile() {
                     <div className="gp-profile-avatar">
 
                         {displayUser?.profilePhoto? (
-                            <img src={`${appConfig.apiBaseUrl}${displayUser.profilePhoto}`}alt="Profile Photo"/>
+                            <SkeletonImage
+                                src={`${appConfig.apiBaseUrl}${displayUser.profilePhoto}`}
+                                alt="Cover"
+                                className="gp-profile-avatar-img" />
                         ) : (
                             <User size={100} className="gp-profile-avatar__avatar"/>
                         )}
