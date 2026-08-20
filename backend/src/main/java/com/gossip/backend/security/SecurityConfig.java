@@ -18,7 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import java.util.List;
 
 import static org.springframework.security.config.Customizer.withDefaults;
-
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -63,7 +63,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(
-            HttpSecurity http
+            HttpSecurity http,
+            JwtAuthenticationFilter jwtAuthenticationFilter
     ) throws Exception {
 
         http
@@ -77,10 +78,18 @@ public class SecurityConfig {
                                 "/auth/login",
                                 "/auth/register",
                                 "/auth/username-suggestions",
-                                "/auth/check-email"
+                                "/auth/check-email",
+                                "/auth/refresh",
+                                "/auth/logout",
+                                "/uploads/**"
                         ).permitAll()
 
                         .anyRequest().authenticated()
+                )
+
+                .addFilterBefore(
+                        jwtAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class
                 );
 
         return http.build();

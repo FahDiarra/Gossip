@@ -1,12 +1,12 @@
 package com.gossip.backend.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -21,6 +21,10 @@ public class RegisterRequest {
     @Size(min = 3, max = 30)
     private String userName;
 
+    @NotNull(message = "Birthday is required")
+    @Past(message = "Birthday must be in the past")
+    private LocalDate birthday;
+
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email")
     private String newEmail;
@@ -28,4 +32,5 @@ public class RegisterRequest {
     @NotBlank(message = "Password is required")
     @Size(min = 8, max = 64)
     private String newPassword;
+    private boolean stayConnected = false;
 }

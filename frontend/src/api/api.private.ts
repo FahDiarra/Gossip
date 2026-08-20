@@ -1,12 +1,8 @@
-
-
 import axios from "axios";
 import appConfig from "@/config/appConfig.ts";
+
 const apiPrivate = axios.create({
     baseURL: appConfig.apiBaseUrl,
-    headers: {
-        "Content-Type": "application/json",
-    },
 });
 
 apiPrivate.interceptors.request.use(

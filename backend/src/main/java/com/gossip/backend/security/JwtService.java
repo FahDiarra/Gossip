@@ -48,7 +48,6 @@ public class JwtService {
     }
 
     public Claims extractAllClaims(String token) {
-
         return Jwts.parser()
                 .verifyWith(secretKey)
                 .build()
@@ -63,7 +62,6 @@ public class JwtService {
     }
 
     public Long extractUserId(String token) {
-
         return Long.valueOf(
                 extractAllClaims(token).getSubject()
         );

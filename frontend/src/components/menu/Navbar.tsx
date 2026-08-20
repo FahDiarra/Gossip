@@ -5,7 +5,7 @@ import { useState } from "react";
 
 //context
 import {useTheme} from "@/context/ThemeContext";
-import { useAuth  } from "@/context/AuthContext";
+import {useAuth} from "@/context/AuthContext";
 //hooks
 import useToggleDropdown from "@/hooks/useToggleDown";
 import BtnWithTooltip from "@/components/BtnWithTooltip.tsx";

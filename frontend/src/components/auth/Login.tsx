@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import {useNavigate} from "react-router-dom";
+import * as React from "react";
 
 
 interface RegisterForm {
@@ -29,16 +30,23 @@ interface LoginProps {
     password: string;
     errorLogin:boolean;
     loading: boolean;
+    unknowError:boolean;
     setForm:React.Dispatch<React.SetStateAction<RegisterForm>>;
+    stayConnected:boolean;
+    setStayConnected: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Login({
                                    email,
                                    password,
                                    errorLogin,
-                                   setForm,
                                    loading,
+                                   unknowError,
+                                    setForm,
+                                    stayConnected,
+                                    setStayConnected,
                                }: LoginProps): React.JSX.Element {
+
 
     const [showPassword, setShowPassword] = useState( false );
 
@@ -54,10 +62,7 @@ export default function Login({
             ...prev,
             [name]: value,
         }));
-
-
     };
-
 
     const disabled:boolean = loading || email==="" || password==="" ;
 
@@ -107,6 +112,21 @@ export default function Login({
         </div>
     </div>
 
+
+          <label className="stay-connected">
+              <span>Stay connected on this device</span>
+
+              <input name="stay-connected"
+                  type="checkbox"
+                  checked={stayConnected}
+                  onChange={(e):void => setStayConnected(e.target.checked)}
+                />
+
+              <span className="ios-switch"></span>
+          </label>
+
+
+
           {errorLogin && (
              <div className="errorInput">
                  <small>
@@ -124,6 +144,13 @@ export default function Login({
               </button>
               </div>
           )}
+
+          {unknowError &&(
+              <div className="errorInput">
+                  <small>Something went wrong. Check your network and try again.</small>
+              </div>
+          )}
+
 
     <button type="submit"  disabled={disabled}
             className={`gossip-submit-btn ${disabled? "disabled" : ""}`}>

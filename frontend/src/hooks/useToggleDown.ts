@@ -9,21 +9,21 @@ export default function useToggleDropdown() {
 
   const { openLayer, closeLayer } = useModalOpened();
 
-  const openMenu = () => {
+  const openMenu = ():void => {
     if (!open) {
       setOpen(true);
       openLayer();
     }
   };
 
-  const closeMenu = () => {
+  const closeMenu = ():void => {
     if (open) {
       setOpen(false);
       closeLayer();
     }
   };
 
-  const toggle = () => {
+  const toggle = ():void => {
     open ? closeMenu() : openMenu();
   };
 
@@ -54,7 +54,7 @@ export default function useToggleDropdown() {
       document.removeEventListener("pointerdown", handlePointerDown);
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [open]);
+  }, [closeMenu, open]);
 
   return {
     openMenu,

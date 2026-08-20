@@ -5,6 +5,7 @@ import { Link, useLocation,useNavigate } from "react-router-dom";
 import { useSidebar } from "@/context/SidebarContext";
 //config
 import appConfig from "@/config/appConfig";
+
 //lang
 import { useTranslation } from "react-i18next";
 import {
@@ -23,7 +24,6 @@ import {
 } from "lucide-react";
 import "@/styles/menu/Sidebar.css";
 
-import exProfile from "@/assets/images/profile.jpg"
 
 //Context
 import {useAuth} from "@/context/AuthContext.tsx";
@@ -33,7 +33,7 @@ export default function Sidebar() {
     const location = useLocation();
     const {t}=useTranslation();
     const navigate = useNavigate();
-    const {user,isAuthenticated} = useAuth();
+    const {user,isAuthenticated,} = useAuth();
     const { open, toggleSidebar }=useSidebar();
 
     const menus = [
@@ -105,10 +105,10 @@ export default function Sidebar() {
         <button onClick={()=>void navigate("profile")} className="gp-sidebar-footer-profile-link">
 
             <div className="gp-sidebar-footer-profile-info">
-                {user?.profileImage ? (
+                {user?.profilePhoto ? (
 
                  <div  className="gp-sidebar-footer-profile-photo">
-                     <img src={exProfile} alt={t("sidebar.profile")} />
+                     <img src={`${appConfig.apiBaseUrl}${user.profilePhoto}`} alt={t("sidebar.profile")} />
                  </div>
 
                 ):( <div className="gp-sidebar-footer-profile-icon">

@@ -155,6 +155,7 @@
     padding: 50px;
     background: var(--bg);
     overflow-y: auto;
+    scrollbar-gutter: stable;
 
 }
 
@@ -483,10 +484,152 @@ Instruction
 }
 
 
+/*===========================================
+ BIRTHDAY
+=========================================*/
 
 
+.gossip-birthday {
+    display: grid;
+    grid-template-columns: 0.8fr 1.5fr 1fr;
+    gap: 10px;
+    width: 100%;
+}
+
+.gossip-birthday select {
+    width: 100%;
+    height: 46px;
+    padding: 0 38px 0 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: var(--input-bg);
+    color: var(--text);
+
+    font-size: 14px;
+    font-family: inherit;
+
+    outline: none;
+    cursor: pointer;
+
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            background 0.2s ease,
+            transform 0.15s ease;
+}
+
+.gossip-birthday select:hover {
+    border-color: var(--accent);
+}
+
+.gossip-birthday select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(
+            in srgb,
+            var(--accent) 15%,
+            transparent
+    );
+}
+
+/* Rempli correctement */
+.gossip-birthday select.birthday-valid {
+    border-color: #28c76f;
+    box-shadow: 0 0 0 2px rgba(40, 199, 111, 0.08);
+}
+
+/* Vide après blur */
+.gossip-birthday select.birthday-invalid {
+    border-color: #ff4d67;
+    box-shadow: 0 0 0 2px rgba(255, 77, 103, 0.08);
+
+    animation: birthdayErrorPulse 0.8s ease;
+}
+
+@keyframes birthdayErrorPulse {
+    0% {
+        border-color: #ff4d67;
+    }
+
+    50% {
+        border-color: transparent;
+    }
+
+    100% {
+        border-color: #ff4d67;
+    }
+}
 
 
+/*==================================
+Stay Connected
+============================*/
+
+.stay-connected {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    width: 100%;
+    cursor: pointer;
+    user-select: none;
+    font-size: 14px;
+    color: #555;
+    border: 1px solid var(--border);
+    padding: 16px;
+    border-radius: 10px;
+}
+
+.stay-connected input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Switch */
+.ios-switch {
+    position: relative;
+    flex-shrink: 0;
+    width: 46px;
+    height: 26px;
+    background: #d1d1d6;
+    border-radius: 999px;
+    transition: background 0.25s ease;
+}
+
+/* Petit cercle */
+.ios-switch::before {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    top: 2px;
+    left: 2px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.25s ease;
+}
+
+/* ON */
+.stay-connected input:checked + .ios-switch {
+    background: #34c759;
+}
+
+.stay-connected input:checked + .ios-switch::before {
+    transform: translateX(20px);
+}
+
+/* Effet au clic */
+.stay-connected:active .ios-switch::before {
+    width: 24px;
+}
+
+.stay-connected input:focus-visible + .ios-switch {
+    outline: 2px solid #007aff;
+    outline-offset: 3px;
+}
 
 /* =========================================
    SUBMIT
@@ -604,9 +747,180 @@ Instruction
     color: var(--secondary-hover);
 
 }
-/* =========================================
-   TABLET
-========================================= */
+
+
+
+
+
+
+/*===========================================
+MODAL
+=======================================*/
+
+
+.session-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(6px);
+    animation: sessionOverlayIn 0.2s ease-out;
+}
+
+.session-modal {
+    position: relative;
+    width: min(420px, 100%);
+    padding: 38px 34px 32px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 20px;
+    box-shadow:
+            0 20px 60px rgba(0, 0, 0, 0.18),
+            0 4px 12px rgba(0, 0, 0, 0.06);
+    animation: sessionModalIn 0.25s ease-out;
+}
+
+/* Icon */
+
+.session-modal-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2563eb;
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+    border-radius: 50%;
+}
+
+/* Title */
+
+.session-modal h2 {
+    margin: 0 0 12px;
+    color: #111827;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+}
+
+/* Description */
+
+.session-modal p {
+    margin: 0 auto 28px;
+    max-width: 330px;
+
+    color: #6b7280;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* Button */
+.session-modal-close-btn{
+    display: flex;
+    padding: 6px;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--main-btn-bg);
+    color: var(--sidebar-btn-color);
+    cursor: pointer;
+     border: none;
+    outline: none;
+    border-radius: 10px;
+}
+.session-modal-close-btn:hover{
+    background: var(--main-btn-bg-hover);
+    color: var(--main-btn-text-hover);
+}
+
+
+.session-modal-button {
+    width: 100%;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border: none;
+    border-radius: 11px;
+    color: #ffffff;
+    background: #2563eb;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+            background 0.2s ease,
+            transform 0.15s ease,
+            box-shadow 0.2s ease;
+}
+
+.session-modal-button:hover {
+    background: #1d4ed8;
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.25);
+    transform: translateY(-1px);
+}
+
+.session-modal-button:active {
+    transform: translateY(0);
+}
+
+.session-modal-button svg {
+    transition: transform 0.2s ease;
+}
+
+.session-modal-button:hover svg {
+    transform: translateX(3px);
+}
+
+/* Animations */
+
+@keyframes sessionOverlayIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes sessionModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* Mobile */
+@media (max-width: 480px) {
+    .session-modal {
+        padding: 32px 24px 26px;
+        border-radius: 18px;
+    }
+
+    .session-modal h2 {
+        font-size: 22px;
+    }
+
+    .session-modal p {
+        font-size: 14px;
+    }
+}
+
+
 
 
 
